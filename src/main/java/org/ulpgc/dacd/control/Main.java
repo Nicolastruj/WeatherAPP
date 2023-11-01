@@ -1,5 +1,8 @@
 package org.ulpgc.dacd.control;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import org.ulpgc.dacd.model.Location;
+import org.ulpgc.dacd.model.Weather;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +14,10 @@ public class Main {
         //File file = new File("LocationFile.txt");
         WeatherProvider weatherProvider = new OpenWeatherMapProvider("src/main/resources/APIKey.txt");
         Instant now = Instant.now();
-        weatherProvider.get(new Location(28.498371,-13.900472, "Fuerteventura"), now);
+        Weather weather = weatherProvider.get(new Location(28.498371,-13.900472, "Fuerteventura"), now);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(weather);
+        System.out.println(json);
     }
     /*public void runTask(){
 

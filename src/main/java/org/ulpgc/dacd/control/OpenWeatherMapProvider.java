@@ -41,18 +41,25 @@ public class OpenWeatherMapProvider implements WeatherProvider {
             JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
             JsonArray listArray = jsonObject.getAsJsonArray("list");
             JsonObject mainData = listArray.get(0).getAsJsonObject().getAsJsonObject("main");
-            JsonObject rainData = listArray.get(0).getAsJsonObject().getAsJsonObject("rain");
-            JsonObject cloudsData = listArray.get(0).getAsJsonObject().getAsJsonObject("clouds");
-            JsonObject windData = listArray.get(0).getAsJsonObject().getAsJsonObject("wind");
+            Double temperature = mainData.get("temp").getAsDouble();
+            Integer humidity = mainData.get("humidity").getAsInt();
 
+            JsonObject rainData = listArray.get(0).getAsJsonObject().getAsJsonObject("rain");
+            Double precipitation = (rainData != null && rainData.has("3h")) ? rainData.get("3h").getAsDouble() : 0.0;
+
+            JsonObject cloudsData = listArray.get(0).getAsJsonObject().getAsJsonObject("clouds");
+            Integer cloudiness = cloudsData.get("all").getAsInt();
+
+            JsonObject windData = listArray.get(0).getAsJsonObject().getAsJsonObject("wind");
+            Double windSpeed = windData.get("speed").getAsDouble();
 
             // Crea un objeto Weather y asigna los valores correspondientes
             Weather weather = new Weather();
-            weather.setTemperature(mainData.get("temp").getAsDouble());
-            weather.setPrecipitation(rainData.get("3h").getAsDouble());
-            weather.setHumidity(mainData.get("humidity").getAsInt());
-            weather.setClouds(cloudsData.get("all").getAsInt());
-            weather.setWindSpeed(windData.get("speed").getAsDouble());
+            weather.setTemperature(temperature);
+            weather.setPrecipitation(precipitation);
+            weather.setHumidity(humidity);
+            weather.setClouds(cloudiness);
+            weather.setWindSpeed(windSpeed);
             weather.setLocaiton(location);
             weather.setTimeStand(ts);
             return weather;
