@@ -21,8 +21,14 @@ public class OpenWeatherMapProvider implements WeatherProvider {
     public String ReadFile(String fileName) throws IOException {
         File file = new File(fileName);
         FileReader reader = new FileReader(file);
-        String apiKey = String.valueOf(reader.read());
-        return apiKey;
+        StringBuilder apiKeyBuilder = new StringBuilder();
+        int character;
+
+        while ((character = reader.read()) != -1) {
+            apiKeyBuilder.append((char) character);
+        }
+
+        return apiKeyBuilder.toString().trim();
     }
 
     @Override
