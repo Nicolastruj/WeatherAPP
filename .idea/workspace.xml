@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="3th commit change at the url">
+    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="4th commit change in serialization way from json to jackson to serialize Instant class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ulpgc/dacd/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ulpgc/dacd/control/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ulpgc/dacd/control/OpenWeatherMapProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ulpgc/dacd/control/OpenWeatherMapProvider.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,7 +104,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698839480923</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="4th commit change in serialization way from json to jackson to serialize Instant class">
+      <option name="closed" value="true" />
+      <created>1698841223578</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1698841223578</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -125,6 +130,7 @@
     <MESSAGE value="1th commit, model classes created and weather provider" />
     <MESSAGE value="2th commit change in readfile method" />
     <MESSAGE value="3th commit change at the url" />
-    <option name="LAST_COMMIT_MESSAGE" value="3th commit change at the url" />
+    <MESSAGE value="4th commit change in serialization way from json to jackson to serialize Instant class" />
+    <option name="LAST_COMMIT_MESSAGE" value="4th commit change in serialization way from json to jackson to serialize Instant class" />
   </component>
 </project>

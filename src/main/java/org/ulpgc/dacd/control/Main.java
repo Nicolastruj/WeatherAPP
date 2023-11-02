@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.TimerTask;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -16,6 +18,7 @@ public class Main {
         Instant now = Instant.now();
         Weather weather = weatherProvider.get(new Location(28.498371,-13.900472, "Fuerteventura"), now);
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule()); // Habilitar el soporte de tipos de fecha y hora de Java 8
         String json = objectMapper.writeValueAsString(weather);
         System.out.println(json);
     }
