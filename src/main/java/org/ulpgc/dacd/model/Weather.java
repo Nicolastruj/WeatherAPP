@@ -26,16 +26,8 @@ public class Weather {
         return temperature;
     }
 
-    public void setTemperature(double temperature) {
+    public void setTemperature(double temperature) {//Esto se puede hacer un patron builder para setter
         this.temperature = temperature;
-    }
-
-    public double getPrecipitation() {
-        return precipitation;
-    }
-
-    public void setPrecipitation(double precipitation) {
-        this.precipitation = precipitation;
     }
 
     public double getHumidity() {
@@ -74,7 +66,15 @@ public class Weather {
         return locaiton;
     }
 
-    public void setLocaiton(Location locaiton) {
+    public void setLocation(Location locaiton) {
         this.locaiton = locaiton;
+    }
+
+    public void setPossibilityOfPrecipitation(Double possibilityOfPrecipitation) {
+        this.precipitation = possibilityOfPrecipitation;
+    }
+
+    public double getPossibilityOfPrecipitation() {
+        return precipitation;
     }
 }

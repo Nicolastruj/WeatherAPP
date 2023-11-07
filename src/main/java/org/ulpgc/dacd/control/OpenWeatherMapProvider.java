@@ -32,8 +32,8 @@ public class OpenWeatherMapProvider implements WeatherProvider {
     }
 
     @Override
-    public Weather get(Location location, Instant ts) {
-        String url = "http://api.openweathermap.org/data/2.5/forecast?lat="+String.valueOf(location.getLat())+"&lon="+String.valueOf(location.getLon())+"&appid="+this.apiKey;
+    public Weather get(Location location) {
+        String url = "http://api.openweathermap.org/data/2.5/forecast?lat=" + String.valueOf(location.getLat()) + "&lon=" + String.valueOf(location.getLon()) + "&appid=" + this.apiKey;
         try {
             Document document = Jsoup.connect(url).ignoreContentType(true).get();
             String json = document.text();
@@ -45,7 +45,7 @@ public class OpenWeatherMapProvider implements WeatherProvider {
             Integer humidity = mainData.get("humidity").getAsInt();
 
             JsonObject rainData = listArray.get(0).getAsJsonObject().getAsJsonObject("rain");
-            Double precipitation = (rainData != null && rainData.has("3h")) ? rainData.get("3h").getAsDouble() : 0.0;
+            Double possibilityOfPrecipitation = (rainData != null && rainData.has("3h")) ? rainData.get("3h").getAsDouble() : 0.0;
 
             JsonObject cloudsData = listArray.get(0).getAsJsonObject().getAsJsonObject("clouds");
             Integer cloudiness = cloudsData.get("all").getAsInt();
@@ -56,16 +56,16 @@ public class OpenWeatherMapProvider implements WeatherProvider {
             // Crea un objeto Weather y asigna los valores correspondientes
             Weather weather = new Weather();
             weather.setTemperature(temperature);
-            weather.setPrecipitation(precipitation);
+            weather.setPossibilityOfPrecipitation(possibilityOfPrecipitation); // Cambiar a probabilidad de precipitación
             weather.setHumidity(humidity);
             weather.setClouds(cloudiness);
             weather.setWindSpeed(windSpeed);
-            weather.setLocaiton(location);
-            weather.setTimeStand(ts);
+            weather.setLocation(location);
+            weather.setTimeStand(Instant.ofEpochSecond(listArray.get(0).getAsJsonObject().get("dt").getAsLong())); // Establecer la hora de predicción
             return weather;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
-}
+}//TODO cambiar la creacion del objeto weather por un constructor, ya que los atributos del objeto tienen que ser final

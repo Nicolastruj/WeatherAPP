@@ -1,5 +1,7 @@
 package org.ulpgc.dacd.control;
 
-public interface WeatherStore {
-   /* public Save(Weather){}*/
+import org.ulpgc.dacd.model.Weather;
+
+public interface WeatherStore extends AutoCloseable{
+   void Save(Weather weather);
 }
