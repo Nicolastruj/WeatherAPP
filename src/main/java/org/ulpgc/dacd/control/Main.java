@@ -15,7 +15,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        WeatherProvider weatherProvider = new OpenWeatherMapProvider("src/main/resources/APIKey.txt");
+        WeatherProvider weatherProvider = new OpenWeatherMapProvider("src/main/resources/APIKey.txt");//TODO pasarlo arecibirlo en linea de comandos
         WeatherStore weatherStore = new SqliteWeatherStore("src/main/resources/WeatherDataBase.db");
         WeatherController openMapWeatherController = new WeatherController(weatherProvider, weatherStore);
 

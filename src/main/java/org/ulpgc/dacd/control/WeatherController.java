@@ -68,5 +68,5 @@ public class WeatherController {
         this.provider.get(new Location(28.098011,-17.107600, "El Hierro"));
         /*String jsonWeatherFuerteventura = objectMapper.writeValueAsString(weatherFuerteventura);
         System.out.println(jsonWeatherFuerteventura);*/
-    }
+    }//TODO guardar en la base de datos aqui
 }
