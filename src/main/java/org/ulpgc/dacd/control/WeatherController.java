@@ -7,6 +7,7 @@ import org.ulpgc.dacd.model.Location;
 import org.ulpgc.dacd.model.Weather;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,7 +22,7 @@ public class WeatherController {
         this.provider = weatherProvider;
         this.storer = weatherStore;
     }
-    public void runTask() throws IOException{
+    public void runTask() throws IOException, SQLException {
         Task();
         /*Timer timer = new Timer();
         TimerTask task = new TimerTask() {
@@ -54,11 +55,11 @@ public class WeatherController {
             }
         }, duracionEnMilisegundos);*/
     }
-    private void Task() throws JsonProcessingException {
+    private void Task() throws JsonProcessingException, SQLException {
         /*ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());*/
         
-        this.provider.get(new Location(28.498371,-13.900472, "Fuerteventura"));
+        storer.Save(this.provider.get(new Location(28.498371,-13.900472, "Fuerteventura")));
         this.provider.get(new Location(28.116044,-15.429279, "Gran Canaria"));
         this.provider.get(new Location(28.964191,-13.546709, "Lanzarote"));
         this.provider.get(new Location(29.233322,-13.500906, "La Graciosa"));

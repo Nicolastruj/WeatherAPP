@@ -5,13 +5,13 @@ import java.time.Instant;
 public class Weather {
     private double temperature;
     private double precipitation;
-    private double humidity;
+    private int humidity;
     private int clouds;
     private double windSpeed;
     private Instant timeStand;
     private Location locaiton;
 
-    public Weather(double temperature, double precipitation, double humidity, int clouds, double windSpeed, Instant timeStand, Location locaiton){
+    public Weather(double temperature, double precipitation, int humidity, int clouds, double windSpeed, Instant timeStand, Location locaiton){
         this.temperature = temperature;
         this.precipitation = precipitation;
         this.humidity = humidity;
@@ -25,11 +25,11 @@ public class Weather {
         return temperature;
     }
 
-    public double getHumidity() {
+    public int getHumidity() {
         return humidity;
     }
 
-    public int getClouds() {
+    public int getCloudisness() {
         return clouds;
     }
 

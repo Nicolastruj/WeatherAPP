@@ -48,8 +48,8 @@ public class OpenWeatherMapProvider implements WeatherProvider {
             Double temperature = mainData.get("temp").getAsDouble();
             Integer humidity = mainData.get("humidity").getAsInt();
 
-            JsonObject rainData = firstPrediction.getAsJsonObject("rain");
-            Double possibilityOfPrecipitation = (rainData != null && rainData.has("3h")) ? rainData.get("3h").getAsDouble() : 0.0;
+            // Usar "pop" para la probabilidad de precipitación
+            Double possibilityOfPrecipitation = firstPrediction.get("pop").getAsDouble();
 
             JsonObject cloudsData = firstPrediction.getAsJsonObject("clouds");
             Integer cloudiness = cloudsData.get("all").getAsInt();
@@ -57,7 +57,9 @@ public class OpenWeatherMapProvider implements WeatherProvider {
             JsonObject windData = firstPrediction.getAsJsonObject("wind");
             Double windSpeed = windData.get("speed").getAsDouble();
 
-            Instant predictionTime = Instant.ofEpochSecond(firstPrediction.get("dt").getAsLong());
+            String predictionDateTime = firstPrediction.get("dt_txt").getAsString();
+            predictionDateTime = predictionDateTime.replace(" ", "T") + "Z";
+            Instant predictionTime = Instant.parse(predictionDateTime);
 
             // Crear un objeto Weather con los atributos como finales
             Weather weather = new Weather(

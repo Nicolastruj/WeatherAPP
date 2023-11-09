@@ -6,6 +6,7 @@ import org.ulpgc.dacd.model.Weather;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Timer;
@@ -14,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException {
         WeatherProvider weatherProvider = new OpenWeatherMapProvider("src/main/resources/APIKey.txt");//TODO pasarlo arecibirlo en linea de comandos
         WeatherStore weatherStore = new SqliteWeatherStore("src/main/resources/WeatherDataBase.db");
         WeatherController openMapWeatherController = new WeatherController(weatherProvider, weatherStore);
