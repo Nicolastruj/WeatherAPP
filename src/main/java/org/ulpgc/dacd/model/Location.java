@@ -26,4 +26,13 @@ public class Location {
     public void setLon(float lon) {
         this.lon = lon;
     }
+
+    public String getIsland() {
+        return island;
+    }
+
+    public Location setIsland(String island) {
+        this.island = island;
+        return this;
+    }
 }

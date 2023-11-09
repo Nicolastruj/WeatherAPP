@@ -6,6 +6,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class SqliteWeatherStore implements WeatherStore{
     private String file;
@@ -23,8 +24,16 @@ public class SqliteWeatherStore implements WeatherStore{
         return connection;
     }
     @Override
-    public void Save(Weather weather) {
-
+    public void Save(Weather weather) throws SQLException {
+        Connection connection = this.open();
+        String insert = "INSERT INTO "+ weather.getLocaiton().getIsland()
+                + " (temp, precipitationPossibility, humidity, cloud, windSpeed, ts)"
+                + "VALUES "
+                + "('" + weather.getTemperature() + ", " + weather.getPossibilityOfPrecipitation() + ", "
+                + weather.getHumidity() + ", " + weather.getClouds() + ", " + weather.getWindSpeed() + ", "
+                + weather.getTimeStand() + ")";
+        Statement statement = connection.createStatement();
+        statement.execute(insert);
     }
 
     @Override

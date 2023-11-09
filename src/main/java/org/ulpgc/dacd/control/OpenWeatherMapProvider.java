@@ -15,9 +15,11 @@ import java.time.Instant;
 
 public class OpenWeatherMapProvider implements WeatherProvider {
     private String apiKey;
+
     public OpenWeatherMapProvider(String fileName) throws IOException {
         this.apiKey = ReadFile(fileName);
     }
+
     public String ReadFile(String fileName) throws IOException {
         File file = new File(fileName);
         FileReader reader = new FileReader(file);
@@ -33,39 +35,45 @@ public class OpenWeatherMapProvider implements WeatherProvider {
 
     @Override
     public Weather get(Location location) {
-        String url = "http://api.openweathermap.org/data/2.5/forecast?lat=" + String.valueOf(location.getLat()) + "&lon=" + String.valueOf(location.getLon()) + "&appid=" + this.apiKey;
+        String url = "http://api.openweathermap.org/data/2.5/forecast?lat=" + String.valueOf(location.getLat()) + "&lon=" + String.valueOf(location.getLon()) + "&units=metric" + "&appid=" + this.apiKey;
         try {
             Document document = Jsoup.connect(url).ignoreContentType(true).get();
             String json = document.text();
             Gson gson = new Gson();
             JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
             JsonArray listArray = jsonObject.getAsJsonArray("list");
-            JsonObject mainData = listArray.get(0).getAsJsonObject().getAsJsonObject("main");
+            JsonObject firstPrediction = listArray.get(0).getAsJsonObject();
+
+            JsonObject mainData = firstPrediction.getAsJsonObject("main");
             Double temperature = mainData.get("temp").getAsDouble();
             Integer humidity = mainData.get("humidity").getAsInt();
 
-            JsonObject rainData = listArray.get(0).getAsJsonObject().getAsJsonObject("rain");
+            JsonObject rainData = firstPrediction.getAsJsonObject("rain");
             Double possibilityOfPrecipitation = (rainData != null && rainData.has("3h")) ? rainData.get("3h").getAsDouble() : 0.0;
 
-            JsonObject cloudsData = listArray.get(0).getAsJsonObject().getAsJsonObject("clouds");
+            JsonObject cloudsData = firstPrediction.getAsJsonObject("clouds");
             Integer cloudiness = cloudsData.get("all").getAsInt();
 
-            JsonObject windData = listArray.get(0).getAsJsonObject().getAsJsonObject("wind");
+            JsonObject windData = firstPrediction.getAsJsonObject("wind");
             Double windSpeed = windData.get("speed").getAsDouble();
 
-            // Crea un objeto Weather y asigna los valores correspondientes
-            Weather weather = new Weather();
-            weather.setTemperature(temperature);
-            weather.setPossibilityOfPrecipitation(possibilityOfPrecipitation); // Cambiar a probabilidad de precipitación
-            weather.setHumidity(humidity);
-            weather.setClouds(cloudiness);
-            weather.setWindSpeed(windSpeed);
-            weather.setLocation(location);
-            weather.setTimeStand(Instant.ofEpochSecond(listArray.get(0).getAsJsonObject().get("dt").getAsLong())); // Establecer la hora de predicción
+            Instant predictionTime = Instant.ofEpochSecond(firstPrediction.get("dt").getAsLong());
+
+            // Crear un objeto Weather con los atributos como finales
+            Weather weather = new Weather(
+                    temperature,
+                    possibilityOfPrecipitation,
+                    humidity,
+                    cloudiness,
+                    windSpeed,
+                    predictionTime,
+                    location
+            );
+
             return weather;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
-}//TODO cambiar la creacion del objeto weather por un constructor, ya que los atributos del objeto tienen que ser final
+}
