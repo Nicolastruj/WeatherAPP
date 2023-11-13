@@ -35,7 +35,7 @@ public class OpenWeatherMapProvider implements WeatherProvider {
 
     @Override
     public Weather get(Location location) {
-        String url = "http://api.openweathermap.org/data/2.5/forecast?lat=" + String.valueOf(location.getLat()) + "&lon=" + String.valueOf(location.getLon()) + "&units=metric" + "&appid=" + this.apiKey;
+        String url = "http://api.openweathermap.org/data/2.5/forecast?lat=" + String.valueOf(location.getLat()) + "&lon=" + String.valueOf(location.getLon()) + "&units=metric&cnt=1" + "&appid=" + this.apiKey;
         try {
             Document document = Jsoup.connect(url).ignoreContentType(true).get();
             String json = document.text();
@@ -78,4 +78,4 @@ public class OpenWeatherMapProvider implements WeatherProvider {
             return null;
         }
     }
-}
+}//TODO cambiarlo para que coja unnicamente la prediccion de las 12

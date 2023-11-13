@@ -19,7 +19,6 @@ public class Main {
         WeatherProvider weatherProvider = new OpenWeatherMapProvider("src/main/resources/APIKey.txt");//TODO pasarlo arecibirlo en linea de comandos
         WeatherStore weatherStore = new SqliteWeatherStore("src/main/resources/WeatherDataBase.db");
         WeatherController openMapWeatherController = new WeatherController(weatherProvider, weatherStore);
-
         openMapWeatherController.runTask();
     }
 }

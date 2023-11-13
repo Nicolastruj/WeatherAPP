@@ -58,16 +58,18 @@ public class WeatherController {
     private void Task() throws JsonProcessingException, SQLException {
         /*ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());*/
-        
         storer.Save(this.provider.get(new Location(28.498371,-13.900472, "Fuerteventura")));
-        this.provider.get(new Location(28.116044,-15.429279, "Gran Canaria"));
-        this.provider.get(new Location(28.964191,-13.546709, "Lanzarote"));
-        this.provider.get(new Location(29.233322,-13.500906, "La Graciosa"));
-        this.provider.get(new Location(28.466531,-16.251671, "Tenerife"));
-        this.provider.get(new Location(28.682925,-17.765297, "La Palma"));
-        this.provider.get(new Location(28.098011,-17.107600, "La Gomera"));
-        this.provider.get(new Location(28.098011,-17.107600, "El Hierro"));
+        storer.Save(this.provider.get(new Location(28.116044,-15.429279, "GranCanaria")));
+        storer.Save(this.provider.get(new Location(28.964191,-13.546709, "Lanzarote")));
+        storer.Save(this.provider.get(new Location(29.233322,-13.500906, "LaGraciosa")));
+        storer.Save(this.provider.get(new Location(28.466531,-16.251671, "Tenerife")));
+        storer.Save(this.provider.get(new Location(28.682925,-17.765297, "LaPalma")));
+        storer.Save(this.provider.get(new Location(28.098011,-17.107600, "LaGomera")));
+        storer.Save(this.provider.get(new Location(28.098011,-17.107600, "ElHierro")));
         /*String jsonWeatherFuerteventura = objectMapper.writeValueAsString(weatherFuerteventura);
         System.out.println(jsonWeatherFuerteventura);*/
     }//TODO guardar en la base de datos aqui
+    public WeatherStore getStorer(){
+        return this.storer;
+    }
 }

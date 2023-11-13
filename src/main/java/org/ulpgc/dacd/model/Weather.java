@@ -41,7 +41,7 @@ public class Weather {
         return timeStand;
     }
 
-    public Location getLocaiton() {
+    public Location getLocation() {
         return locaiton;
     }
 

@@ -11,9 +11,38 @@ public class SqliteWeatherStore implements WeatherStore{
     private String file;
     public SqliteWeatherStore(String file){
         this.file = file;
+        createTables();
     }
+
+    private void createTables() {
+        String[] islasCanarias = {"Tenerife", "GranCanaria", "Lanzarote", "Fuerteventura", "LaPalma", "LaGomera", "ElHierro", "LaGraciosa"};
+
+        try (Connection connection = open();
+             Statement statement = connection.createStatement()) {
+
+            for (String isla : islasCanarias) {
+                // Crea la tabla solo si no existe
+                String createTableQuery = "CREATE TABLE IF NOT EXISTS " + isla + " ("
+                        + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                        + "temp DOUBLE NOT NULL,"
+                        + "possibilityOfPrecipitation DOUBLE NOT NULL,"
+                        + "humidity INT NOT NULL,"
+                        + "cloudisness INT NOT NULL,"
+                        + "windSpeed DOUBLE NOT NULL,"
+                        + "ts TIMESTAMP NOT NULL"
+                        + ")";
+                statement.executeUpdate(createTableQuery);
+            }
+
+            System.out.println("Tablas creadas exitosamente para las 8 islas de Canarias.");
+
+        } catch (SQLException e) {
+            System.err.println("Error al crear las tablas: " + e.getMessage());
+        }
+    }
+
     public Connection open(){
-        String url = "jdbc:sqlite"+this.file;
+        String url = "jdbc:sqlite:" + this.file;
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(url);
@@ -25,39 +54,38 @@ public class SqliteWeatherStore implements WeatherStore{
     @Override
     public void Save(Weather weather) throws SQLException {
         Connection connection = this.open();
-        String insert = "INSERT INTO "+ weather.getLocaiton().getIsland()
-                + " (temp, precipitationPossibility, humidity, cloudisness, windSpeed, ts)"
-                + "VALUES "
-                + "('" + weather.getTemperature() + ", " + weather.getPossibilityOfPrecipitation() + ", "
-                + weather.getHumidity() + ", " + weather.getCloudisness() + ", " + weather.getWindSpeed() + ", "
-                + weather.getTimeStand() + ")";
+        String insert = "INSERT INTO " + weather.getLocation().getIsland()
+                + " (temp, possibilityOfPrecipitation, humidity, cloudisness, windSpeed, ts)"
+                + " VALUES "
+                + "(" + weather.getTemperature() + ", " + weather.getPossibilityOfPrecipitation() + ", "
+                + weather.getHumidity() + ", " + weather.getCloudisness() + ", " + weather.getWindSpeed() + ", '"
+                + weather.getTimeStand().toString() + "')";
         Statement statement = connection.createStatement();
         statement.execute(insert);
     }
 
     @Override
     public Weather get(Location location, Instant ts) throws SQLException {
-        Connection connection = this.open();
-        String select = "SELECT * " + "FROM " + location.getIsland() + " WHERE ts LIKE " + "'" + "FROM"
-                + ts.toString() + "'";
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(select);
-        Weather weather = null;
-        while (resultSet.next()){
-            double temp = resultSet.getDouble("temp");
-            double precipitationPossibility = resultSet.getDouble("precipitationPossibility");
-            int humidity = resultSet.getInt("humidity");
-            int cloudisness = resultSet.getInt("cloudisness");
-            double windSpeed = resultSet.getDouble("windSpeed");
-            weather = new Weather(temp, precipitationPossibility, humidity, cloudisness, windSpeed, ts, location);
+        try (Connection connection = this.open();
+             Statement statement = connection.createStatement()) {
+            String select = "SELECT * FROM " + location.getIsland() +
+                    " WHERE ts LIKE '%" + ts.toString() + "%'";
+            ResultSet resultSet = statement.executeQuery(select);
+            Weather weather = null;
+            while (resultSet.next()) {
+                double temp = resultSet.getDouble("temp");
+                double precipitationPossibility = resultSet.getDouble("precipitationPossibility");
+                int humidity = resultSet.getInt("humidity");
+                int cloudisness = resultSet.getInt("cloudisness");
+                double windSpeed = resultSet.getDouble("windSpeed");
+                weather = new Weather(temp, precipitationPossibility, humidity, cloudisness, windSpeed, ts, location);
+            }
+            return weather;
         }
-        return weather;
     }
+
 
     @Override
     public void close() throws Exception {
-        String url = "jdbc:sqlite;ç:src/main/resources/WeatherDataBase.db";
-        Connection connection = DriverManager.getConnection(url);
-        connection.close();
     }
 }//Autoclosable
