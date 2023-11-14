@@ -12,70 +12,82 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OpenWeatherMapProvider implements WeatherProvider {
     private String apiKey;
 
-    public OpenWeatherMapProvider(String fileName) throws IOException {
-        this.apiKey = ReadFile(fileName);
-    }
-
-    public String ReadFile(String fileName) throws IOException {
-        File file = new File(fileName);
-        FileReader reader = new FileReader(file);
-        StringBuilder apiKeyBuilder = new StringBuilder();
-        int character;
-
-        while ((character = reader.read()) != -1) {
-            apiKeyBuilder.append((char) character);
-        }
-
-        return apiKeyBuilder.toString().trim();
+    public OpenWeatherMapProvider(String apiKey) throws IOException {
+        this.apiKey = apiKey;
     }
 
     @Override
-    public Weather get(Location location) {//TODO mira lo de los registros
-        String url = "http://api.openweathermap.org/data/2.5/forecast?lat=" + String.valueOf(location.getLat()) + "&lon=" + String.valueOf(location.getLon()) + "&units=metric&cnt=1" + "&appid=" + this.apiKey;
+    public List<Weather> get(Location location) {
+        String url = "http://api.openweathermap.org/data/2.5/forecast?lat=" + location.getLat() +
+                "&lon=" + location.getLon() + "&units=metric" + "&appid=" + this.apiKey;
+
         try {
             Document document = Jsoup.connect(url).ignoreContentType(true).get();
             String json = document.text();
             Gson gson = new Gson();
             JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
             JsonArray listArray = jsonObject.getAsJsonArray("list");
-            JsonObject firstPrediction = listArray.get(0).getAsJsonObject();
 
-            JsonObject mainData = firstPrediction.getAsJsonObject("main");
-            Double temperature = mainData.get("temp").getAsDouble();
-            Integer humidity = mainData.get("humidity").getAsInt();
+            List<Weather> fiveDayForecast = new ArrayList<>();
 
-            // Usar "pop" para la probabilidad de precipitación
-            Double possibilityOfPrecipitation = firstPrediction.get("pop").getAsDouble();
+            for (int i = 0; i < listArray.size(); i++) {
+                JsonObject prediction = listArray.get(i).getAsJsonObject();
 
-            JsonObject cloudsData = firstPrediction.getAsJsonObject("clouds");
-            Integer cloudiness = cloudsData.get("all").getAsInt();
+                // Filtrar pronósticos a las 12 pm
+                if (isNoonPrediction(prediction)) {
+                    Weather weather = extractWeatherData(prediction, location);
+                    fiveDayForecast.add(weather);
 
-            JsonObject windData = firstPrediction.getAsJsonObject("wind");
-            Double windSpeed = windData.get("speed").getAsDouble();
+                    // Detener después de obtener 5 días de pronóstico
+                    if (fiveDayForecast.size() == 5) {
+                        break;
+                    }
+                }
+            }
 
-            String predictionDateTime = firstPrediction.get("dt_txt").getAsString();
-            predictionDateTime = predictionDateTime.replace(" ", "T") + "Z";
-            Instant predictionTime = Instant.parse(predictionDateTime);
-
-            // Crear un objeto Weather con los atributos como finales
-            Weather weather = new Weather(
-                    temperature,
-                    possibilityOfPrecipitation,
-                    humidity,
-                    cloudiness,
-                    windSpeed,
-                    predictionTime,
-                    location
-            );
-
-            return weather;
+            return fiveDayForecast;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
-}//TODO cambiarlo para que coja unnicamente la prediccion de las 12
+
+    private boolean isNoonPrediction(JsonObject prediction) {
+        String predictionDateTime = prediction.get("dt_txt").getAsString();
+
+        // Elimina la 'Z' al final antes de analizar la fecha
+        predictionDateTime = predictionDateTime.replace("Z", "");
+
+        // Utiliza un formateador que acepte el espacio entre la fecha y la hora
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime localDateTime = LocalDateTime.parse(predictionDateTime, formatter);
+
+        return localDateTime.getHour() == 12 && localDateTime.getMinute() == 0;
+    }
+
+    private Weather extractWeatherData(JsonObject prediction, Location location) {
+        JsonObject mainData = prediction.getAsJsonObject("main");
+        double temperature = mainData.get("temp").getAsDouble();
+        int humidity = mainData.get("humidity").getAsInt();
+        double possibilityOfPrecipitation = prediction.get("pop").getAsDouble();
+        JsonObject cloudsData = prediction.getAsJsonObject("clouds");
+        int cloudiness = cloudsData.get("all").getAsInt();
+        JsonObject windData = prediction.getAsJsonObject("wind");
+        double windSpeed = windData.get("speed").getAsDouble();
+        String predictionDateTime = prediction.get("dt_txt").getAsString();
+        predictionDateTime = predictionDateTime.replace(" ", "T") + "Z";
+        Instant predictionTime = Instant.parse(predictionDateTime);
+
+        return new Weather(temperature, possibilityOfPrecipitation, humidity, cloudiness, windSpeed, predictionTime, location);
+    }
+}

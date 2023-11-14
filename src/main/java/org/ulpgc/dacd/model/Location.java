@@ -1,9 +1,9 @@
 package org.ulpgc.dacd.model;
 
 public class Location {
-    private double lat;
-    private double lon;
-    private String island;
+    private final double lat;
+    private final double lon;
+    private final String island;
 
     public Location(double lat, double lon, String island) {
         this.lat = lat;
@@ -15,24 +15,12 @@ public class Location {
         return lat;
     }
 
-    public void setLat(float lat) {
-        this.lat = lat;
-    }
-
     public double getLon() {
         return lon;
-    }
-
-    public void setLon(float lon) {
-        this.lon = lon;
     }
 
     public String getIsland() {
         return island;
     }
 
-    public Location setIsland(String island) {
-        this.island = island;
-        return this;
-    }
 }

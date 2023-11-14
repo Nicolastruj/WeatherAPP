@@ -1,26 +1,22 @@
 package org.ulpgc.dacd.control;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.ulpgc.dacd.model.Location;
 import org.ulpgc.dacd.model.Weather;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.List;
 
 public class WeatherController {
     private final WeatherProvider provider;
     private final WeatherStore storer;
+    private final List<Location> locations;
 
-    public WeatherController(WeatherProvider weatherProvider, WeatherStore weatherStore){
+    public WeatherController(WeatherProvider weatherProvider, WeatherStore weatherStore, List<Location> locations){
         this.provider = weatherProvider;
         this.storer = weatherStore;
+        this.locations = locations;
     }
     public void runTask() throws IOException, SQLException {
         Task();
@@ -56,20 +52,14 @@ public class WeatherController {
         }, duracionEnMilisegundos);*/
     }
     private void Task() throws JsonProcessingException, SQLException {
-        /*ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());*/
-        storer.Save(this.provider.get(new Location(28.498371,-13.900472, "Fuerteventura")));
-        storer.Save(this.provider.get(new Location(28.116044,-15.429279, "GranCanaria")));
-        storer.Save(this.provider.get(new Location(28.964191,-13.546709, "Lanzarote")));
-        storer.Save(this.provider.get(new Location(29.233322,-13.500906, "LaGraciosa")));
-        storer.Save(this.provider.get(new Location(28.466531,-16.251671, "Tenerife")));
-        storer.Save(this.provider.get(new Location(28.682925,-17.765297, "LaPalma")));
-        storer.Save(this.provider.get(new Location(28.098011,-17.107600, "LaGomera")));
-        storer.Save(this.provider.get(new Location(28.098011,-17.107600, "ElHierro")));
-        /*String jsonWeatherFuerteventura = objectMapper.writeValueAsString(weatherFuerteventura);
-        System.out.println(jsonWeatherFuerteventura);*/
-    }//TODO guardar en la base de datos aqui
-    public WeatherStore getStorer(){
-        return this.storer;
+        for (Location location : locations) {
+            List<Weather> weatherList = provider.get(location);
+            if (weatherList != null && !weatherList.isEmpty()) {
+                for (Weather weather : weatherList) {
+                    storer.Save(weather);
+                }
+            }
+        }
     }
+
 }

@@ -1,26 +1,37 @@
 package org.ulpgc.dacd.control;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import org.ulpgc.dacd.model.Location;
-import org.ulpgc.dacd.model.Weather;
 
-import java.io.File;
+import org.ulpgc.dacd.model.Location;
+
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.Instant;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Main {
+public class Main {//TODO ctrl alt l y ctrl alt o
     public static void main(String[] args) throws IOException, SQLException {
-        WeatherProvider weatherProvider = new OpenWeatherMapProvider("src/main/resources/APIKey.txt");//TODO pasarlo arecibirlo en linea de comandos
-        WeatherStore weatherStore = new SqliteWeatherStore("src/main/resources/WeatherDataBase.db");
-        WeatherController openMapWeatherController = new WeatherController(weatherProvider, weatherStore);
+        if (args.length < 1) {
+            System.out.println("Por favor, proporciona la API key como argumento.");
+            return;
+        }
+
+        String apiKey = args[0];
+        String dbPath = args[1];
+        WeatherProvider weatherProvider = new OpenWeatherMapProvider(apiKey);
+        WeatherStore weatherStore = new SqliteWeatherStore(dbPath);
+        List<Location> locations = getLocations();
+        WeatherController openMapWeatherController = new WeatherController(weatherProvider, weatherStore, locations);
         openMapWeatherController.runTask();
     }
+    public static List<Location> getLocations(){
+        List<Location> locations = new ArrayList<>();
+        locations.add(new Location(28.498371, -13.900472, "Fuerteventura"));
+        locations.add(new Location(28.116044, -15.429279, "GranCanaria"));
+        locations.add(new Location(28.964191, -13.546709, "Lanzarote"));
+        locations.add(new Location(29.233322, -13.500906, "LaGraciosa"));
+        locations.add(new Location(28.466531, -16.251671, "Tenerife"));
+        locations.add(new Location(28.682925, -17.765297, "LaPalma"));
+        locations.add(new Location(28.098011, -17.107600, "LaGomera"));
+        locations.add(new Location(28.098011, -17.107600, "ElHierro"));
+        return locations;
+    }
 }
-//TODO implementar la llamada http con jsoup, pasarla a un jsonobject, mirar la documentacion de la pagina, mirar la clase instant, hacer las peticiones a la base de datos con jdbc y hacer las interfaces
-//TODO Solucion de serializacion con gson instant

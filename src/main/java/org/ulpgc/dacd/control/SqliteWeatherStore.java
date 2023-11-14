@@ -88,4 +88,4 @@ public class SqliteWeatherStore implements WeatherStore{
     @Override
     public void close() throws Exception {
     }
-}//Autoclosable
+}

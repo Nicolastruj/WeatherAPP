@@ -3,13 +3,13 @@ package org.ulpgc.dacd.model;
 import java.time.Instant;
 
 public class Weather {
-    private double temperature;
-    private double precipitation;
-    private int humidity;
-    private int clouds;
-    private double windSpeed;
-    private Instant timeStand;
-    private Location locaiton;
+    private final double temperature;
+    private final double precipitation;
+    private final int humidity;
+    private final int clouds;
+    private final double windSpeed;
+    private final Instant timeStand;
+    private final Location locaiton;
 
     public Weather(double temperature, double precipitation, int humidity, int clouds, double windSpeed, Instant timeStand, Location locaiton){
         this.temperature = temperature;
@@ -43,10 +43,6 @@ public class Weather {
 
     public Location getLocation() {
         return locaiton;
-    }
-
-    public void setLocation(Location locaiton) {
-        this.locaiton = locaiton;
     }
 
     public double getPossibilityOfPrecipitation() {
