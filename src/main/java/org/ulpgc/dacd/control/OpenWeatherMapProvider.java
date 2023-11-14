@@ -34,7 +34,7 @@ public class OpenWeatherMapProvider implements WeatherProvider {
     }
 
     @Override
-    public Weather get(Location location) {
+    public Weather get(Location location) {//TODO mira lo de los registros
         String url = "http://api.openweathermap.org/data/2.5/forecast?lat=" + String.valueOf(location.getLat()) + "&lon=" + String.valueOf(location.getLon()) + "&units=metric&cnt=1" + "&appid=" + this.apiKey;
         try {
             Document document = Jsoup.connect(url).ignoreContentType(true).get();
