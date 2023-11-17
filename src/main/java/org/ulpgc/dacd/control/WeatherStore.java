@@ -7,6 +7,6 @@ import java.sql.SQLException;
 import java.time.Instant;
 
 public interface WeatherStore extends AutoCloseable{
-   void Save(Weather weather) throws SQLException;
+   void save(Weather weather) throws SQLException;
    Weather get(Location location, Instant ts) throws SQLException;
 }

@@ -52,7 +52,7 @@ public class SqliteWeatherStore implements WeatherStore{
         return connection;
     }
     @Override
-    public void Save(Weather weather) throws SQLException {
+    public void save(Weather weather) throws SQLException {
         Connection connection = this.open();
         String insert = "INSERT INTO " + weather.getLocation().getIsland()
                 + " (temp, possibilityOfPrecipitation, humidity, cloudisness, windSpeed, ts)"
