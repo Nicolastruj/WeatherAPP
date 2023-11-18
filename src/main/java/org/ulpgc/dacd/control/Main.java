@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {//TODO ctrl alt l y ctrl alt o
+public class Main {
     public static void main(String[] args) throws IOException, SQLException {
         if (args.length < 1) {
             System.out.println("Por favor, proporciona la API key como argumento.");

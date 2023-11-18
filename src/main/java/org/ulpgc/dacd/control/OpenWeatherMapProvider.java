@@ -7,14 +7,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.ulpgc.dacd.model.Location;
 import org.ulpgc.dacd.model.Weather;
-
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +38,10 @@ public class OpenWeatherMapProvider implements WeatherProvider {
             for (int i = 0; i < listArray.size(); i++) {
                 JsonObject prediction = listArray.get(i).getAsJsonObject();
 
-                // Filtrar pronósticos a las 12 pm
                 if (isNoonPrediction(prediction)) {
                     Weather weather = extractWeatherData(prediction, location);
                     fiveDayForecast.add(weather);
 
-                    // Detener después de obtener 5 días de pronóstico
                     if (fiveDayForecast.size() == 5) {
                         break;
                     }
@@ -64,11 +57,7 @@ public class OpenWeatherMapProvider implements WeatherProvider {
 
     private boolean isNoonPrediction(JsonObject prediction) {
         String predictionDateTime = prediction.get("dt_txt").getAsString();
-
-        // Elimina la 'Z' al final antes de analizar la fecha
         predictionDateTime = predictionDateTime.replace("Z", "");
-
-        // Utiliza un formateador que acepte el espacio entre la fecha y la hora
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime localDateTime = LocalDateTime.parse(predictionDateTime, formatter);
 

@@ -6,6 +6,7 @@ import org.ulpgc.dacd.model.Weather;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -35,11 +36,14 @@ public class WeatherController {
             }
         };
 
+        Calendar startTime = Calendar.getInstance();
+        startTime.set(2023, Calendar.NOVEMBER, 19, 0, 0, 0);
+        long tiempoDeInicio = startTime.getTimeInMillis();
+
         long intervaloHoras = 6;
         long intervaloMilisegundos = intervaloHoras * 60 * 60 * 1000;
         long duracionTotalDias = 5;
         long duracionTotalMilisegundos = duracionTotalDias * 24 * 60 * 60 * 1000;
-        long tiempoDeInicio = System.currentTimeMillis();
 
         timer.scheduleAtFixedRate(task, new Date(tiempoDeInicio), intervaloMilisegundos);
 

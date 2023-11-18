@@ -2,8 +2,6 @@ package org.ulpgc.dacd.control;
 
 import org.ulpgc.dacd.model.Location;
 import org.ulpgc.dacd.model.Weather;
-
-import java.io.File;
 import java.sql.*;
 import java.time.Instant;
 
@@ -21,7 +19,6 @@ public class SqliteWeatherStore implements WeatherStore{
              Statement statement = connection.createStatement()) {
 
             for (String isla : islasCanarias) {
-                // Crea la tabla solo si no existe
                 String createTableQuery = "CREATE TABLE IF NOT EXISTS " + isla + " ("
                         + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
                         + "temp DOUBLE NOT NULL,"
@@ -33,8 +30,6 @@ public class SqliteWeatherStore implements WeatherStore{
                         + ")";
                 statement.executeUpdate(createTableQuery);
             }
-
-            System.out.println("Tablas creadas exitosamente para las 8 islas de Canarias.");
 
         } catch (SQLException e) {
             System.err.println("Error al crear las tablas: " + e.getMessage());
