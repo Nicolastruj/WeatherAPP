@@ -73,7 +73,7 @@ public class SqliteWeatherStore implements WeatherStore{
                 int humidity = resultSet.getInt("humidity");
                 int cloudisness = resultSet.getInt("cloudisness");
                 double windSpeed = resultSet.getDouble("windSpeed");
-                weather = new Weather(temp, precipitationPossibility, humidity, cloudisness, windSpeed, ts, location);
+                weather = new Weather(temp, precipitationPossibility, humidity, cloudisness, windSpeed, ts, location, petitionInstant, dataFont);
             }
             return weather;
         }

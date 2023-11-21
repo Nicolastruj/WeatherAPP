@@ -4,9 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="17th commit workspace develop2">
+    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="19th commit second practice start">
+      <change afterPath="$PROJECT_DIR$/events-store-builder/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/events-store-builder/src/main/java/org/ulpgc/dacd/EventsStoreBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/events-store-builder/src/main/java/org/ulpgc/dacd/WeatherEventsStoreBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weather-provider/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ulpgc/dacd/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ulpgc/dacd/control/OpenWeatherMapProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/OpenWeatherMapProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ulpgc/dacd/control/SqliteWeatherStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/SqliteWeatherStore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ulpgc/dacd/control/WeatherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/WeatherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ulpgc/dacd/control/WeatherProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/WeatherProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ulpgc/dacd/control/WeatherStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/WeatherStore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ulpgc/dacd/model/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/model/Location.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ulpgc/dacd/model/Weather.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/model/Weather.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/WeatherDataBase.db" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/resources/WeatherDataBase.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +30,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -23,7 +38,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="develop2" />
+        <entry key="$PROJECT_DIR$" value="develop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -45,7 +60,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "practice2",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "jbr-17",
     "last_opened_file_path": "C:/Nueva carpeta (2)/DACC/WeatherApp-master",
@@ -57,6 +72,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Nico\IdeaProjects\WheaterApp\weather-provider" />
       <recent name="C:\Users\Nico\IdeaProjects\WheaterApp" />
     </key>
   </component>
@@ -210,7 +226,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700325345173</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="19th commit second practice start">
+      <option name="closed" value="true" />
+      <created>1700558950161</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1700558950161</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -240,6 +264,7 @@
     <MESSAGE value="14th commit seems finished" />
     <MESSAGE value="15th commit seems finished" />
     <MESSAGE value="17th commit workspace develop2" />
-    <option name="LAST_COMMIT_MESSAGE" value="17th commit workspace develop2" />
+    <MESSAGE value="19th commit second practice start" />
+    <option name="LAST_COMMIT_MESSAGE" value="19th commit second practice start" />
   </component>
 </project>

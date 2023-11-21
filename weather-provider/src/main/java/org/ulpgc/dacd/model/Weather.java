@@ -10,8 +10,10 @@ public class Weather {
     private final double windSpeed;
     private final Instant timeStand;
     private final Location locaiton;
+    private final Instant petitionInstant;
+    private final String dataFont;
 
-    public Weather(double temperature, double precipitation, int humidity, int clouds, double windSpeed, Instant timeStand, Location locaiton){
+    public Weather(double temperature, double precipitation, int humidity, int clouds, double windSpeed, Instant timeStand, Location locaiton, Instant petitionInstant, String dataFont){
         this.temperature = temperature;
         this.precipitation = precipitation;
         this.humidity = humidity;
@@ -19,6 +21,8 @@ public class Weather {
         this.windSpeed = windSpeed;
         this.timeStand = timeStand;
         this.locaiton = locaiton;
+        this.petitionInstant = petitionInstant;
+        this.dataFont = dataFont;
     }
 
     public double getTemperature() {
@@ -47,5 +51,9 @@ public class Weather {
 
     public double getPossibilityOfPrecipitation() {
         return precipitation;
+    }
+
+    public Instant getPetitionInstant() {
+        return petitionInstant;
     }
 }
