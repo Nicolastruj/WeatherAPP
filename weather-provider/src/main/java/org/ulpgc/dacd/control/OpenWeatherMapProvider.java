@@ -65,18 +65,58 @@ public class OpenWeatherMapProvider implements WeatherProvider {
         }
     }
 
-    public void send(List<Weather> weatherList) throws JMSException {
+    public void send(List<Weather> weatherList) throws MyStoreBuilderException {
+        Connection connection = null;
+        try {
+            connection = createAndStartConnection();
+            Session session = createSession(connection);
+            Destination destination = createDestination(session);
+            MessageProducer producer = createMessageProducer(session, destination);
+            TextMessage message = createTextMessage(session, weatherList);
+            sendMessage(producer, message);
+        } catch (JMSException e) {
+            throw new MyStoreBuilderException("Error in JMS processing", e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (JMSException e) {
+                    throw new MyStoreBuilderException("Error in JMS connection", e);
+                }
+            }
+        }
+    }
+
+    private Connection createAndStartConnection() throws JMSException {
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
         Connection connection = connectionFactory.createConnection();
         connection.start();
-        Session session = connection.createSession(false,
-                Session.AUTO_ACKNOWLEDGE);
-        Destination destination = session.createQueue(subject);
-        MessageProducer producer = session.createProducer(destination);
-        TextMessage message = session
-                .createTextMessage("Aqui va el objeto serializado");
+        return connection;
+    }
+
+    private Session createSession(Connection connection) throws JMSException {
+        return connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+    }
+
+    private Destination createDestination(Session session) throws JMSException {
+        return session.createQueue(subject);
+    }
+
+    private MessageProducer createMessageProducer(Session session, Destination destination) throws JMSException {
+        return session.createProducer(destination);
+    }
+
+    private TextMessage createTextMessage(Session session, List<Weather> weatherList) throws JMSException {
+        // Aquí debes implementar la lógica para serializar el objeto WeatherList
+        // y crear un TextMessage con el contenido serializado.
+        // Por ejemplo:
+        // String serializedData = serializeWeatherList(weatherList);
+        // return session.createTextMessage(serializedData);
+        return session.createTextMessage("Aqui va el objeto serializado");
+    }
+
+    private void sendMessage(MessageProducer producer, TextMessage message) throws JMSException {
         producer.send(message);
-        connection.close();
     }
 
     private boolean isNoonPrediction(JsonObject prediction) {

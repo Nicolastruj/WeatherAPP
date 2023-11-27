@@ -14,12 +14,10 @@ import java.util.TimerTask;
 
 public class WeatherController {
     private final WeatherProvider provider;
-    private final WeatherStore storer;
     private final List<Location> locations;
 
-    public WeatherController(WeatherProvider weatherProvider, WeatherStore weatherStore, List<Location> locations) {
+    public WeatherController(WeatherProvider weatherProvider, List<Location> locations) {
         this.provider = weatherProvider;
-        this.storer = weatherStore;
         this.locations = locations;
     }
 
