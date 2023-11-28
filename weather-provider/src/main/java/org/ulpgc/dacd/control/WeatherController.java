@@ -27,7 +27,7 @@ public class WeatherController {
 
     public void runTask(){
         // Programar tarea para ejecutarse cada 6 horas
-        scheduler.scheduleAtFixedRate(this::task, 0, 6, TimeUnit.HOURS);
+        scheduler.scheduleAtFixedRate(this::task, 0, 10, TimeUnit.SECONDS);
     }
     private void task() {
         try {

@@ -7,13 +7,12 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.ulpgc.dacd.model.Weather;
 import javax.jms.*;
 import java.time.Instant;
-import java.util.List;
 
 
 public class WeatherEventsStore implements WeatherStore {
 
     private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;
-    private static String subject = "topic prediction.Weather";
+    private static String subject = "topic:prediction.Weather";
 
     public WeatherEventsStore(){}
     public void save(Weather weatherPrediction) throws MyWeatherException {
@@ -74,7 +73,7 @@ public class WeatherEventsStore implements WeatherStore {
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
         return gson.toJson(weather);
-    }//TODO comprobar si tiene que ser static
+    }//TODO comprobar si tiene que ser static y mirar si instant adapter va en el control o en el modelo
 
     private void sendMessage(MessageProducer producer, TextMessage message) throws JMSException {
         producer.send(message);
