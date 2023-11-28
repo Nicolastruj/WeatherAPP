@@ -25,8 +25,6 @@ import javax.jms.TextMessage;
 
 public class OpenWeatherMapProvider implements WeatherProvider {
     private String apiKey;
-    private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;
-    private static String subject = "WEATHER_QUEUE";
     public OpenWeatherMapProvider(String apiKey) throws IOException {
         this.apiKey = apiKey;
     }
@@ -42,9 +40,8 @@ public class OpenWeatherMapProvider implements WeatherProvider {
             Gson gson = new Gson();
             JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
             JsonArray listArray = jsonObject.getAsJsonArray("list");
-
             List<Weather> fiveDayForecast = new ArrayList<>();
-
+            //TODO consultar si pasar el intant como parametro a extract weather o no
             for (int i = 0; i < listArray.size(); i++) {
                 JsonObject prediction = listArray.get(i).getAsJsonObject();
 
@@ -63,60 +60,6 @@ public class OpenWeatherMapProvider implements WeatherProvider {
             e.printStackTrace();
             return null;
         }
-    }
-
-    public void send(List<Weather> weatherList) throws MyStoreBuilderException {
-        Connection connection = null;
-        try {
-            connection = createAndStartConnection();
-            Session session = createSession(connection);
-            Destination destination = createDestination(session);
-            MessageProducer producer = createMessageProducer(session, destination);
-            TextMessage message = createTextMessage(session, weatherList);
-            sendMessage(producer, message);
-        } catch (JMSException e) {
-            throw new MyStoreBuilderException("Error in JMS processing", e);
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (JMSException e) {
-                    throw new MyStoreBuilderException("Error in JMS connection", e);
-                }
-            }
-        }
-    }
-
-    private Connection createAndStartConnection() throws JMSException {
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
-        Connection connection = connectionFactory.createConnection();
-        connection.start();
-        return connection;
-    }
-
-    private Session createSession(Connection connection) throws JMSException {
-        return connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-    }
-
-    private Destination createDestination(Session session) throws JMSException {
-        return session.createQueue(subject);
-    }
-
-    private MessageProducer createMessageProducer(Session session, Destination destination) throws JMSException {
-        return session.createProducer(destination);
-    }
-
-    private TextMessage createTextMessage(Session session, List<Weather> weatherList) throws JMSException {
-        // Aquí debes implementar la lógica para serializar el objeto WeatherList
-        // y crear un TextMessage con el contenido serializado.
-        // Por ejemplo:
-        // String serializedData = serializeWeatherList(weatherList);
-        // return session.createTextMessage(serializedData);
-        return session.createTextMessage("Aqui va el objeto serializado");
-    }
-
-    private void sendMessage(MessageProducer producer, TextMessage message) throws JMSException {
-        producer.send(message);
     }
 
     private boolean isNoonPrediction(JsonObject prediction) {
@@ -140,7 +83,7 @@ public class OpenWeatherMapProvider implements WeatherProvider {
         String predictionDateTime = prediction.get("dt_txt").getAsString();
         predictionDateTime = predictionDateTime.replace(" ", "T") + "Z";
         Instant predictionTime = Instant.parse(predictionDateTime);
-
-        return new Weather(temperature, possibilityOfPrecipitation, humidity, cloudiness, windSpeed, predictionTime, location, petitionInstant, dataFont);
+        Instant callInstant = Instant.now();
+        return new Weather(temperature, possibilityOfPrecipitation, humidity, cloudiness, windSpeed, predictionTime, location, callInstant, "weather-provider");
     }
 }//TODO cambiar la clase para que envie objetos serializados

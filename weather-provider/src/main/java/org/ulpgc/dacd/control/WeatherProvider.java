@@ -8,5 +8,4 @@ import javax.jms.JMSException;
 
 public interface WeatherProvider {
     public List<Weather> get(Location location);
-    public void send(List<Weather> weatherList) throws MyStoreBuilderException;
 }

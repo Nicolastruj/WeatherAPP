@@ -13,11 +13,9 @@ public class Main {
             System.out.println("Por favor, proporciona la API key como argumento.");
             return;
         }
-
         String apiKey = args[0];
-        String dbPath = args[1];
         WeatherProvider weatherProvider = new OpenWeatherMapProvider(apiKey);
-        WeatherStore weatherStore = new SqliteWeatherStore(dbPath);
+        WeatherStore weatherStore = new WeatherEventsStore();
         List<Location> locations = getLocations();
         WeatherController openMapWeatherController = new WeatherController(weatherProvider, weatherStore, locations);
         openMapWeatherController.runTask();

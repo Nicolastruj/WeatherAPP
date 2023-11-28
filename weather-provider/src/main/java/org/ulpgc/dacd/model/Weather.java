@@ -8,20 +8,20 @@ public class Weather {
     private final int humidity;
     private final int clouds;
     private final double windSpeed;
-    private final Instant timeStand;
+    private final Instant predictionTime;
     private final Location locaiton;
-    private final Instant petitionInstant;
+    private final Instant callInstant;
     private final String dataFont;
 
-    public Weather(double temperature, double precipitation, int humidity, int clouds, double windSpeed, Instant timeStand, Location locaiton, Instant petitionInstant, String dataFont){
+    public Weather(double temperature, double precipitation, int humidity, int clouds, double windSpeed, Instant predictionTime, Location locaiton, Instant callInstant, String dataFont){
         this.temperature = temperature;
         this.precipitation = precipitation;
         this.humidity = humidity;
         this.clouds = clouds;
         this.windSpeed = windSpeed;
-        this.timeStand = timeStand;
+        this.predictionTime = predictionTime;
         this.locaiton = locaiton;
-        this.petitionInstant = petitionInstant;
+        this.callInstant = callInstant;
         this.dataFont = dataFont;
     }
 
@@ -41,8 +41,8 @@ public class Weather {
         return windSpeed;
     }
 
-    public Instant getTimeStand() {
-        return timeStand;
+    public Instant getPredictionTime() {
+        return predictionTime;
     }
 
     public Location getLocation() {
@@ -53,7 +53,7 @@ public class Weather {
         return precipitation;
     }
 
-    public Instant getPetitionInstant() {
-        return petitionInstant;
+    public Instant getCallInstant() {
+        return callInstant;
     }
 }
