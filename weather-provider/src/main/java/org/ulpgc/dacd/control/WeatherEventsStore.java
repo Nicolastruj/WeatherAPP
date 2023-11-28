@@ -1,17 +1,19 @@
 package org.ulpgc.dacd.control;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.ulpgc.dacd.model.Weather;
 import javax.jms.*;
+import java.time.Instant;
 import java.util.List;
 
 
 public class WeatherEventsStore implements WeatherStore {
 
     private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;
-    private static String subject = "WEATHER_QUEUE";
+    private static String subject = "topic prediction.Weather";
 
     public WeatherEventsStore(){}
     public void save(Weather weatherPrediction) throws MyWeatherException {
@@ -67,7 +69,10 @@ public class WeatherEventsStore implements WeatherStore {
     }
 
     private String serializeWeatherToJson(Weather weather) {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Instant.class, new InstantTypeAdapter())
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                .create();
         return gson.toJson(weather);
     }//TODO comprobar si tiene que ser static
 

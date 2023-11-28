@@ -8,49 +8,40 @@ import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class WeatherController {
     private final WeatherProvider provider;
     private final WeatherStore storer;
     private final List<Location> locations;
+    private final ScheduledExecutorService scheduler;
 
-    public WeatherController(WeatherProvider weatherProvider, WeatherStore wetherStorer, List<Location> locations) {
+    public WeatherController(WeatherProvider weatherProvider, WeatherStore weatherStorer, List<Location> locations) {
         this.provider = weatherProvider;
-        this.storer = wetherStorer;
+        this.storer = weatherStorer;
         this.locations = locations;
+        this.scheduler = Executors.newScheduledThreadPool(1);
     }
 
     public void runTask(){
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    task();
-                } catch (JsonProcessingException | MyWeatherException e) {
-                    throw new RuntimeException(e);
+        // Programar tarea para ejecutarse cada 6 horas
+        scheduler.scheduleAtFixedRate(this::task, 0, 6, TimeUnit.HOURS);
+    }
+    private void task() {
+        try {
+            for (Location location : locations) {
+                List<Weather> weatherList = provider.get(location);
+                if (weatherList != null && !weatherList.isEmpty()) {
+                    for (Weather weather : weatherList) {
+                        storer.save(weather);
+                    }
                 }
             }
-        };
-
-        Calendar startTime = Calendar.getInstance();
-        startTime.set(2023, Calendar.NOVEMBER, 19, 0, 0, 0);
-        long tiempoDeInicio = startTime.getTimeInMillis();
-
-        long intervaloHoras = 6;
-        long intervaloMilisegundos = intervaloHoras * 60 * 60 * 1000;
-
-        timer.scheduleAtFixedRate(task, new Date(tiempoDeInicio), intervaloMilisegundos);
-    }//TODO esto esta mal porque no tenia que parar a los cinco dias sino dejarlo ejecutando y se para cuando el programador decidad
-
-    private void task() throws JsonProcessingException, MyWeatherException {
-        for (Location location : locations) {
-            List<Weather> weatherList = provider.get(location);
-            if (weatherList != null && !weatherList.isEmpty()) {
-                for (Weather weather : weatherList) {
-                    storer.save(weather);
-                }
-            }
+        } catch (Exception e) {
+            e.printStackTrace();  // Puedes cambiar esto según tu manejo de excepciones
+            // También puedes registrar los detalles en un archivo de registro
         }
     }
 }
