@@ -86,4 +86,4 @@ public class OpenWeatherMapProvider implements WeatherProvider {
         Instant callInstant = Instant.now();
         return new Weather(temperature, possibilityOfPrecipitation, humidity, cloudiness, windSpeed, predictionTime, location, callInstant, "weather-provider");
     }
-}//TODO cambiar la clase para que envie objetos serializados
+}//TODO modularizar

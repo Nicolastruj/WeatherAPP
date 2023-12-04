@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="23th commit messages sended">
-      <change afterPath="$PROJECT_DIR$/events-store-builder/src/main/java/org/ulpgc/dacd/control/EventsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/events-store-builder/src/main/java/org/ulpgc/dacd/control/EventsReceiver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/events-store-builder/src/main/java/org/ulpgc/dacd/control/MyWeatherException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/events-store-builder/src/main/java/org/ulpgc/dacd/control/WeatherEventsReceiver.java" afterDir="false" />
+    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="24th commit receiver created">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/events-store-builder/src/main/java/org/ulpgc/dacd/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/events-store-builder/src/main/java/org/ulpgc/dacd/control/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/WeatherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/WeatherController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/WeatherEventsStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/WeatherEventsStore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/events-store-builder/src/main/java/org/ulpgc/dacd/control/WeatherEventsReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/events-store-builder/src/main/java/org/ulpgc/dacd/control/WeatherEventsReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/OpenWeatherMapProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/OpenWeatherMapProvider.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -261,7 +256,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701166502686</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="24th commit receiver created">
+      <option name="closed" value="true" />
+      <created>1701190588009</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1701190588009</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -296,6 +299,7 @@
     <MESSAGE value="21th commit sender and receiver created" />
     <MESSAGE value="22th commit sender changed" />
     <MESSAGE value="23th commit messages sended" />
-    <option name="LAST_COMMIT_MESSAGE" value="23th commit messages sended" />
+    <MESSAGE value="24th commit receiver created" />
+    <option name="LAST_COMMIT_MESSAGE" value="24th commit receiver created" />
   </component>
 </project>
