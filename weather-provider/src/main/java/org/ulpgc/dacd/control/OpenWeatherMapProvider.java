@@ -31,59 +31,105 @@ public class OpenWeatherMapProvider implements WeatherProvider {
 
     @Override
     public List<Weather> get(Location location) {
-        String url = "http://api.openweathermap.org/data/2.5/forecast?lat=" + location.getLat() +
-                "&lon=" + location.getLon() + "&units=metric" + "&appid=" + this.apiKey;
+        String url = buildApiUrl(location);
 
         try {
-            Document document = Jsoup.connect(url).ignoreContentType(true).get();
+            Document document = getWeatherDocument(url);
             String json = document.text();
-            Gson gson = new Gson();
-            JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
+            JsonObject jsonObject = parseJson(json);
             JsonArray listArray = jsonObject.getAsJsonArray("list");
-            List<Weather> fiveDayForecast = new ArrayList<>();
-            //TODO consultar si pasar el intant como parametro a extract weather o no
-            for (int i = 0; i < listArray.size(); i++) {
-                JsonObject prediction = listArray.get(i).getAsJsonObject();
 
-                if (isNoonPrediction(prediction)) {
-                    Weather weather = extractWeatherData(prediction, location);
-                    fiveDayForecast.add(weather);
-
-                    if (fiveDayForecast.size() == 5) {
-                        break;
-                    }
-                }
-            }
-
-            return fiveDayForecast;
+            return extractFiveDayForecast(listArray, location);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    private boolean isNoonPrediction(JsonObject prediction) {
-        String predictionDateTime = prediction.get("dt_txt").getAsString();
-        predictionDateTime = predictionDateTime.replace("Z", "");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime localDateTime = LocalDateTime.parse(predictionDateTime, formatter);
+    private String buildApiUrl(Location location) {
+        return "http://api.openweathermap.org/data/2.5/forecast?lat=" + location.getLat() +
+                "&lon=" + location.getLon() + "&units=metric" + "&appid=" + this.apiKey;
+    }
 
+    private Document getWeatherDocument(String url) throws IOException {
+        return Jsoup.connect(url).ignoreContentType(true).get();
+    }
+
+    private JsonObject parseJson(String json) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, JsonObject.class);
+    }
+
+    private List<Weather> extractFiveDayForecast(JsonArray listArray, Location location) {
+        List<Weather> fiveDayForecast = new ArrayList<>();
+
+        for (int i = 0; i < listArray.size(); i++) {
+            JsonObject prediction = listArray.get(i).getAsJsonObject();
+
+            if (isNoonPrediction(prediction)) {
+                Weather weather = extractWeatherData(prediction, location);
+                fiveDayForecast.add(weather);
+
+                if (fiveDayForecast.size() == 5) {
+                    break;
+                }
+            }
+        }
+
+        return fiveDayForecast;
+    }
+
+    private boolean isNoonPrediction(JsonObject prediction) {
+        LocalDateTime localDateTime = extractLocalDateTime(prediction);
         return localDateTime.getHour() == 12 && localDateTime.getMinute() == 0;
     }
 
+    private LocalDateTime extractLocalDateTime(JsonObject prediction) {
+        String predictionDateTime = prediction.get("dt_txt").getAsString();
+        predictionDateTime = predictionDateTime.replace("Z", "");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.parse(predictionDateTime, formatter);
+    }
+
     private Weather extractWeatherData(JsonObject prediction, Location location) {
+        double temperature = extractTemperature(prediction);
+        int humidity = extractHumidity(prediction);
+        double possibilityOfPrecipitation = extractPossibilityOfPrecipitation(prediction);
+        int cloudiness = extractCloudiness(prediction);
+        double windSpeed = extractWindSpeed(prediction);
+        Instant predictionTime = extractPredictionTime(prediction);
+        Instant ts = Instant.now();
+
+        return new Weather(temperature, possibilityOfPrecipitation, humidity, cloudiness, windSpeed, predictionTime, location, ts, "weather-provider");
+    }
+
+    private double extractTemperature(JsonObject prediction) {
         JsonObject mainData = prediction.getAsJsonObject("main");
-        double temperature = mainData.get("temp").getAsDouble();
-        int humidity = mainData.get("humidity").getAsInt();
-        double possibilityOfPrecipitation = prediction.get("pop").getAsDouble();
+        return mainData.get("temp").getAsDouble();
+    }
+
+    private int extractHumidity(JsonObject prediction) {
+        JsonObject mainData = prediction.getAsJsonObject("main");
+        return mainData.get("humidity").getAsInt();
+    }
+
+    private double extractPossibilityOfPrecipitation(JsonObject prediction) {
+        return prediction.get("pop").getAsDouble();
+    }
+
+    private int extractCloudiness(JsonObject prediction) {
         JsonObject cloudsData = prediction.getAsJsonObject("clouds");
-        int cloudiness = cloudsData.get("all").getAsInt();
+        return cloudsData.get("all").getAsInt();
+    }
+
+    private double extractWindSpeed(JsonObject prediction) {
         JsonObject windData = prediction.getAsJsonObject("wind");
-        double windSpeed = windData.get("speed").getAsDouble();
+        return windData.get("speed").getAsDouble();
+    }
+
+    private Instant extractPredictionTime(JsonObject prediction) {
         String predictionDateTime = prediction.get("dt_txt").getAsString();
         predictionDateTime = predictionDateTime.replace(" ", "T") + "Z";
-        Instant predictionTime = Instant.parse(predictionDateTime);
-        Instant callInstant = Instant.now();
-        return new Weather(temperature, possibilityOfPrecipitation, humidity, cloudiness, windSpeed, predictionTime, location, callInstant, "weather-provider");
+        return Instant.parse(predictionDateTime);
     }
 }//TODO modularizar

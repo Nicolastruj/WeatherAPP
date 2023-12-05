@@ -57,24 +57,19 @@ public class WeatherEventsStore implements WeatherStore {
     }
     private TextMessage createTextMessage(Session session, Weather weatherPrediction) throws JMSException {
         try {
-            // Serializar el objeto Weather a JSON utilizando Gson
             String serializedData = serializeWeatherToJson(weatherPrediction);
-
-            // Crear un TextMessage con el contenido serializado
             return session.createTextMessage(serializedData);
         } catch (Exception e) {
             throw new JMSException("Error al crear el mensaje de texto: " + e.getMessage());
         }
     }
-
     private String serializeWeatherToJson(Weather weather) {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Instant.class, new InstantTypeAdapter())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
         return gson.toJson(weather);
-    }//TODO comprobar si tiene que ser static y mirar si instant adapter va en el control o en el modelo
-
+    }
     private void sendMessage(MessageProducer producer, TextMessage message) throws JMSException {
         producer.send(message);
     }

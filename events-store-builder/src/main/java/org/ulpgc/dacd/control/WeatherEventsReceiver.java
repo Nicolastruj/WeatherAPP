@@ -1,42 +1,35 @@
 package org.ulpgc.dacd.control;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.ulpgc.dacd.model.Weather;
-
 import javax.jms.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
-public class WeatherEventsReceiver implements EventsReceiver{//TODO a cada evento un mensaje
+public class WeatherEventsReceiver implements EventsReceiver{
     private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;
     private static String subject = "topic:prediction.Weather";
     private static String baseDirectory = "eventstore/prediction.Weather/";
-    private static Gson gson;
-    public void receive() throws MyWeatherException {
+    public void receive() throws MyWeatherException {//TODO checkear las excepciones
         try {
             Connection connection = createAndStartConnection();
             Session session = createSession(connection);
             Destination destination = createDestination(session);
             MessageConsumer consumer = createMessageConsumer(session, destination);
-
             while (true) {
                 Message message = consumer.receive();
                 if (message instanceof TextMessage) {
                     TextMessage textMessage = (TextMessage) message;
                     handleTextMessage(textMessage);
-                } else {
-                    // Manejar otros tipos de mensajes según sea necesario
                 }
             }
-
         } catch (JMSException | IOException e) {
             throw new MyWeatherException("Error in JMS processing", e);
         }
@@ -61,45 +54,41 @@ public class WeatherEventsReceiver implements EventsReceiver{//TODO a cada event
         return session.createConsumer(destination);
     }
 
-    private void processMessage(MessageConsumer consumer) throws JMSException, IOException {
-        Message message = consumer.receive();
-        if (message instanceof TextMessage) {
-            TextMessage textMessage = (TextMessage) message;
-            handleTextMessage(textMessage);
-        }
-    }
-
     private void handleTextMessage(TextMessage textMessage) throws JMSException, IOException {
         String eventData = textMessage.getText();
-        JsonObject jsonObjectWeather = JsonParser.parseString(eventData).getAsJsonObject();
-        String callInstantValue = jsonObjectWeather.get("callInstant").getAsString();
-        long timestamp = parseCallInstant(callInstantValue);
-
-        String ss = "prediction-provider";  // Reemplaza con la lógica para obtener el ss
-        String formattedDate = formatDate(timestamp);
-
-        File eventStoreDirectory = createEventStoreDirectory(ss, formattedDate);
+        JsonObject jsonObjectWeather = parseJsonWeather(eventData);
+        String callInstantValue = getCallInstant(jsonObjectWeather);
+        LocalDateTime localDateTime = parseToLocalDateTime(callInstantValue);
+        String formattedDate = formatLocalDateTime(localDateTime);
+        String ss = getSS();
+        File eventStoreDirectory = createEventStoreDirectory(ss);
         String fileName = createFileName(ss, formattedDate);
-
         writeToFile(eventData, fileName);
     }
 
-    private long parseCallInstant(String callInstant) {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
-            Date date = sdf.parse(callInstant);
-            return date.getTime();
-        } catch (ParseException e) {
-            // Manejar la excepción de parseo según sea necesario
-            e.printStackTrace();
-            return System.currentTimeMillis();  // Si hay un error, usa la hora actual
-        }
-    }
-    private String formatDate(long timestamp) {
-        return new SimpleDateFormat("yyyyMMdd").format(new Date(timestamp));
+    private JsonObject parseJsonWeather(String eventData) {
+        return JsonParser.parseString(eventData).getAsJsonObject();
     }
 
-    private File createEventStoreDirectory(String ss, String formattedDate) {
+    private String getCallInstant(JsonObject jsonObjectWeather) {
+        return jsonObjectWeather.get("ts").getAsString();
+    }
+
+    private LocalDateTime parseToLocalDateTime(String callInstantValue) {
+        Instant instant = Instant.parse(callInstantValue);
+        return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+    }
+
+    private String formatLocalDateTime(LocalDateTime localDateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        return localDateTime.format(formatter);
+    }
+
+    private String getSS() {
+        // Lógica para obtener el ss
+        return "prediction-provider";
+    }
+    private File createEventStoreDirectory(String ss) {
         File eventStoreDirectory = new File(baseDirectory + ss + "/");
         eventStoreDirectory.mkdirs();
         return eventStoreDirectory;
@@ -116,4 +105,3 @@ public class WeatherEventsReceiver implements EventsReceiver{//TODO a cada event
         }
     }
 }
-//TODO cambia la fecha del event por la fecha de la prediccion

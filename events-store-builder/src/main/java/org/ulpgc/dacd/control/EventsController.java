@@ -1,7 +1,5 @@
 package org.ulpgc.dacd.control;
 
-import org.apache.activemq.thread.Task;
-
 public class EventsController {
     private final EventsReceiver receiver;
 
