@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="24th commit receiver created">
+    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="28th commit dates almost finished">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/events-store-builder/src/main/java/org/ulpgc/dacd/control/WeatherEventsReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/events-store-builder/src/main/java/org/ulpgc/dacd/control/WeatherEventsReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/OpenWeatherMapProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/OpenWeatherMapProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventstore/prediction.Weather/prediction-provider/20231204.events" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="develop" />
+        <entry key="$PROJECT_DIR$" value="practice2_feature1" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -83,6 +82,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
       </list>
