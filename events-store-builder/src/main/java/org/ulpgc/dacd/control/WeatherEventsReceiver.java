@@ -1,18 +1,25 @@
 package org.ulpgc.dacd.control;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.ulpgc.dacd.model.Weather;
+
 import javax.jms.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class WeatherEventsReceiver implements EventsReceiver{
+public class WeatherEventsReceiver implements EventsReceiver{//TODO a cada evento un mensaje
     private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;
     private static String subject = "topic:prediction.Weather";
     private static String baseDirectory = "eventstore/prediction.Weather/";
+    private static Gson gson;
     public void receive() throws MyWeatherException {
         try {
             Connection connection = createAndStartConnection();
@@ -64,7 +71,9 @@ public class WeatherEventsReceiver implements EventsReceiver{
 
     private void handleTextMessage(TextMessage textMessage) throws JMSException, IOException {
         String eventData = textMessage.getText();
-        long timestamp = System.currentTimeMillis();
+        JsonObject jsonObjectWeather = JsonParser.parseString(eventData).getAsJsonObject();
+        String callInstantValue = jsonObjectWeather.get("callInstant").getAsString();
+        long timestamp = parseCallInstant(callInstantValue);
 
         String ss = "prediction-provider";  // Reemplaza con la lógica para obtener el ss
         String formattedDate = formatDate(timestamp);
@@ -75,12 +84,23 @@ public class WeatherEventsReceiver implements EventsReceiver{
         writeToFile(eventData, fileName);
     }
 
+    private long parseCallInstant(String callInstant) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+            Date date = sdf.parse(callInstant);
+            return date.getTime();
+        } catch (ParseException e) {
+            // Manejar la excepción de parseo según sea necesario
+            e.printStackTrace();
+            return System.currentTimeMillis();  // Si hay un error, usa la hora actual
+        }
+    }
     private String formatDate(long timestamp) {
         return new SimpleDateFormat("yyyyMMdd").format(new Date(timestamp));
     }
 
     private File createEventStoreDirectory(String ss, String formattedDate) {
-        File eventStoreDirectory = new File(baseDirectory + ss + "/" + formattedDate);
+        File eventStoreDirectory = new File(baseDirectory + ss + "/");
         eventStoreDirectory.mkdirs();
         return eventStoreDirectory;
     }
