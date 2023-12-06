@@ -17,7 +17,7 @@ public class WeatherEventsReceiver implements EventsReceiver{
     private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;
     private static String subject = "topic:prediction.Weather";
     private static String baseDirectory = "eventstore/prediction.Weather/";
-    public void receive() throws MyWeatherException {//TODO checkear las excepciones
+    public void receive() throws MyWeatherException {
         try {
             Connection connection = createAndStartConnection();
             Session session = createSession(connection);
@@ -60,7 +60,7 @@ public class WeatherEventsReceiver implements EventsReceiver{
         String callInstantValue = getCallInstant(jsonObjectWeather);
         LocalDateTime localDateTime = parseToLocalDateTime(callInstantValue);
         String formattedDate = formatLocalDateTime(localDateTime);
-        String ss = getSS();
+        String ss = getSS(jsonObjectWeather);
         File eventStoreDirectory = createEventStoreDirectory(ss);
         String fileName = createFileName(ss, formattedDate);
         writeToFile(eventData, fileName);
@@ -84,9 +84,8 @@ public class WeatherEventsReceiver implements EventsReceiver{
         return localDateTime.format(formatter);
     }
 
-    private String getSS() {
-        // Lógica para obtener el ss
-        return "prediction-provider";
+    private String getSS(JsonObject jsonObjectWeather) {
+        return jsonObjectWeather.get("ss").getAsString();
     }
     private File createEventStoreDirectory(String ss) {
         File eventStoreDirectory = new File(baseDirectory + ss + "/");

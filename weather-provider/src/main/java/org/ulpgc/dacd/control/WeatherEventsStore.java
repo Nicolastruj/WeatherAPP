@@ -73,7 +73,4 @@ public class WeatherEventsStore implements WeatherStore {
     private void sendMessage(MessageProducer producer, TextMessage message) throws JMSException {
         producer.send(message);
     }
-
-
 }
-//TODO puede haber posibilidad de dividir esto en metodos

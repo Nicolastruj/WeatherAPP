@@ -11,9 +11,9 @@ public class Weather {
     private final Instant predictionTime;
     private final Location locaiton;
     private final Instant ts;
-    private final String dataFont;
+    private final String ss;
 
-    public Weather(double temperature, double precipitation, int humidity, int clouds, double windSpeed, Instant predictionTime, Location locaiton, Instant ts, String dataFont){
+    public Weather(double temperature, double precipitation, int humidity, int clouds, double windSpeed, Instant predictionTime, Location locaiton, Instant ts, String ss){
         this.temperature = temperature;
         this.precipitation = precipitation;
         this.humidity = humidity;
@@ -22,7 +22,7 @@ public class Weather {
         this.predictionTime = predictionTime;
         this.locaiton = locaiton;
         this.ts = ts;
-        this.dataFont = dataFont;
+        this.ss = ss;
     }
 
     public double getTemperature() {
@@ -55,5 +55,9 @@ public class Weather {
 
     public Instant getTs() {
         return ts;
+    }
+
+    public String getSs() {
+        return ss;
     }
 }

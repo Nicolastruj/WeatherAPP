@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws IOException, SQLException {
+    public static void main(String[] args) throws IOException{
         if (args.length < 1) {
             System.out.println("Por favor, proporciona la API key como argumento.");
             return;

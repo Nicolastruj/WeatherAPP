@@ -3,8 +3,6 @@ package org.ulpgc.dacd.control;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import org.apache.activemq.ActiveMQConnection;
-import org.apache.activemq.ActiveMQConnectionFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.ulpgc.dacd.model.Location;
@@ -15,13 +13,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.MessageProducer;
-import javax.jms.Session;
-import javax.jms.TextMessage;
 
 public class OpenWeatherMapProvider implements WeatherProvider {
     private String apiKey;
@@ -132,4 +123,4 @@ public class OpenWeatherMapProvider implements WeatherProvider {
         predictionDateTime = predictionDateTime.replace(" ", "T") + "Z";
         return Instant.parse(predictionDateTime);
     }
-}//TODO modularizar
+}

@@ -1,13 +1,8 @@
 package org.ulpgc.dacd.control;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.ulpgc.dacd.model.Location;
 import org.ulpgc.dacd.model.Weather;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -26,7 +21,7 @@ public class WeatherController {
     }
 
     public void runTask(){
-        // Programar tarea para ejecutarse cada 6 horas
+        //TODO Programar tarea para ejecutarse cada 6 horas
         scheduler.scheduleAtFixedRate(this::task, 0, 10, TimeUnit.SECONDS);
     }
     private void task() {
@@ -40,8 +35,7 @@ public class WeatherController {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();  // Puedes cambiar esto según tu manejo de excepciones
-            // También puedes registrar los detalles en un archivo de registro
+            e.printStackTrace();
         }
     }
 }
