@@ -1,14 +1,11 @@
 package org.ulpgc.dacd.control;
 
 import org.ulpgc.dacd.model.Location;
-
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args){
         if (args.length < 1) {
             System.out.println("Por favor, proporciona la API key como argumento.");
             return;
