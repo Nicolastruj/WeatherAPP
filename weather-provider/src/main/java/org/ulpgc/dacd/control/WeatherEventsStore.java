@@ -12,7 +12,7 @@ import java.time.Instant;
 public class WeatherEventsStore implements WeatherStore {
 
     private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;
-    private static String subject = "topic:prediction.Weather";
+    private static String subject = "topic prediction.Weather";
 
     public WeatherEventsStore(){}
     public void save(Weather weatherPrediction) throws MyWeatherException {

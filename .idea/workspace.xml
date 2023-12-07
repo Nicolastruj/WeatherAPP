@@ -4,16 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="32th commit files">
+    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="33th commit seems finished">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UMLWeather.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/events-store-builder/src/main/java/org/ulpgc/dacd/control/EventsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/events-store-builder/src/main/java/org/ulpgc/dacd/control/EventsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/events-store-builder/src/main/java/org/ulpgc/dacd/control/WeatherEventsReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/events-store-builder/src/main/java/org/ulpgc/dacd/control/WeatherEventsReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eventstore/prediction.Weather/prediction-provider/20231205.events" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventstore/prediction.Weather/weather-provider/20231206.events" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/OpenWeatherMapProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/OpenWeatherMapProvider.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/WeatherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/WeatherController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/WeatherEventsStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/WeatherEventsStore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/WeatherProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/WeatherProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/WeatherStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/control/WeatherStore.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/model/Weather.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/ulpgc/dacd/model/Weather.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -282,7 +282,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701768176287</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="33th commit seems finished">
+      <option name="closed" value="true" />
+      <created>1701859767455</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1701859767455</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -319,6 +327,7 @@
     <MESSAGE value="23th commit messages sended" />
     <MESSAGE value="24th commit receiver created" />
     <MESSAGE value="30th commit date = callInstant" />
-    <option name="LAST_COMMIT_MESSAGE" value="30th commit date = callInstant" />
+    <MESSAGE value="33th commit seems finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="33th commit seems finished" />
   </component>
 </project>

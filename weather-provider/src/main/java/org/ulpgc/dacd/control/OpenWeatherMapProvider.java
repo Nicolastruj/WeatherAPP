@@ -16,7 +16,7 @@ import java.util.List;
 
 public class OpenWeatherMapProvider implements WeatherProvider {
     private String apiKey;
-    public OpenWeatherMapProvider(String apiKey) throws IOException {
+    public OpenWeatherMapProvider(String apiKey){
         this.apiKey = apiKey;
     }
 

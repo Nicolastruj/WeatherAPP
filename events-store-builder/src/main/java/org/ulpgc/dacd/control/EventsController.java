@@ -8,12 +8,12 @@ public class EventsController {
     }
     public void runTask(){
         try {
-            Task();
+            task();
         } catch (MyWeatherException e) {
             throw new RuntimeException(e);
         }
     }
-    public void Task() throws MyWeatherException {
+    public void task() throws MyWeatherException {
         this.receiver.receive();
     }
 

@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 
 public class WeatherEventsReceiver implements EventsReceiver{
     private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;
-    private static String subject = "topic:prediction.Weather";
+    private static String subject = "topic prediction.Weather";
     private static String baseDirectory = "eventstore/prediction.Weather/";
     public void receive() throws MyWeatherException {
         try {
