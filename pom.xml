@@ -9,8 +9,9 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>weather-provider</module>
-        <module>events-store-builder</module>
+        <module>Prediction-Provider</module>
+        <module>Datalake-Builder</module>
+        <module>Hotelsinfo-provider</module>
     </modules>
 
     <properties>
