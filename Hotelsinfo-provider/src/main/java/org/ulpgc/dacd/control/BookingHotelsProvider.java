@@ -1,5 +1,7 @@
 package org.ulpgc.dacd.control;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -7,7 +9,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
-
+import org.ulpgc.dacd.model.Hotel;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,14 +19,16 @@ import java.util.Map;
 public class BookingHotelsProvider implements HotelsProvider {
 
     @Override
-    public void getHotels(String islandName) {
+    public List<Hotel> getHotels(String islandName) {
         try {
             String destId = getDestId("GranCanaria");
             System.out.println(destId);
-            List<String> hotelList = searchHotels(destId, "2024-02-15", "2024-02-20", "1", "1");
-            for (String hotel : hotelList){
+            List<String> jsonHotelList = searchHotels(destId, "2024-02-15", "2024-02-20", "1", "1");
+            for (String hotel : jsonHotelList){
                 System.out.println("Hotel Info: " + hotel);
             }
+            List<Hotel> hotelList = convertJsonListToHotelList(jsonHotelList);
+            return hotelList;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -146,5 +151,55 @@ public class BookingHotelsProvider implements HotelsProvider {
             urlBuilder.deleteCharAt(urlBuilder.length() - 1); // Eliminar el último "&"
         }
         return urlBuilder.toString();
+    }
+    public static List<Hotel> convertJsonListToHotelList(List<String> jsonList) {
+        List<Hotel> hotelList = new ArrayList<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        for (String jsonString : jsonList) {
+            try {
+                JsonNode jsonNode = objectMapper.readTree(jsonString);
+                // Extract relevant information from jsonNode and create a Hotel object
+                Hotel hotel = createHotelFromJsonNode(jsonNode);
+                hotelList.add(hotel);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return hotelList;
+    }
+
+    private static Hotel createHotelFromJsonNode(JsonNode jsonNode) {
+        // Extract relevant fields from jsonNode and create a Hotel object
+        String id = jsonNode.path("id").asText("");
+        String name = jsonNode.path("hotel_name").asText("");
+        String location = jsonNode.path("city").asText("");
+
+        JsonNode priceNode = jsonNode.path("composite_price_breakdown");
+        double totalPriceAfterTaxesAndDiscount = priceNode.path("gross_amount").asDouble(0.0);
+        double pricePerNightAfterTaxesAndDiscount = priceNode.path("gross_amount_per_night").asDouble(0.0);
+
+        JsonNode benefitsNode = priceNode.path("benefits");
+        double discountPercentageForOnlineBooking = benefitsNode.path(2).path("item_amount").path("value").asDouble(0.0);
+
+        String review = jsonNode.path("review_score_word").asText("");
+        String reviewNumber = jsonNode.path("review_nr").asText("");
+        String distanceToCenter = jsonNode.path("distance_to_cc_formatted").asText("");
+        String starsNumber = jsonNode.path("starsNumber").asText("");
+        boolean freeCancellation = jsonNode.path("is_free_cancellable").asInt(0) == 1;
+
+        // Extract services from the "hotel_facilities" field
+        JsonNode facilitiesNode = jsonNode.path("hotel_facilities");
+        List<String> services = new ArrayList<>();
+        if (facilitiesNode != null && facilitiesNode.isArray()) {
+            for (JsonNode facility : facilitiesNode) {
+                services.add(facility.asText(""));
+            }
+        }
+
+        return new Hotel(id, name, location, totalPriceAfterTaxesAndDiscount,
+                pricePerNightAfterTaxesAndDiscount, discountPercentageForOnlineBooking,
+                review, reviewNumber, distanceToCenter, starsNumber, freeCancellation, services);
     }
 }
