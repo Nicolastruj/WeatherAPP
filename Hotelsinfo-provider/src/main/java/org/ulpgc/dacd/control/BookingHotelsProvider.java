@@ -11,60 +11,72 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.ulpgc.dacd.model.Hotel;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BookingHotelsProvider implements HotelsProvider {
 
     @Override
-    public List<Hotel> getHotels(String islandName) {
+    public List<Hotel> getHotels() throws MyHotelException {
         try {
-            String destId = getDestId("GranCanaria");
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.print("Ingrese la apiKey: ");
+            String apiKey = scanner.nextLine();
+
+            System.out.print("Ingrese el apiHost: ");
+            String apiHost = scanner.nextLine();
+
+            System.out.print("Ingrese la fecha de checkin (YYYY-MM-DD): ");
+            String checkinDate = scanner.nextLine();
+
+            System.out.print("Ingrese la fecha de checkout (YYYY-MM-DD): ");
+            String checkoutDate = scanner.nextLine();
+
+            System.out.print("Ingrese el número de adultos: ");
+            String adultsNumber = scanner.nextLine();
+
+            System.out.print("Ingrese el número de niños: ");
+            String childrensNumber = scanner.nextLine();
+
+            System.out.print("Ingrese la edad de los niños: ");
+            String childrensAge = scanner.nextLine();
+
+            System.out.print("Ingrese el número de habitaciones: ");
+            String roomNumber = scanner.nextLine();
+
+            System.out.print("Ingrese el nombre de la isla: ");
+            String islandName = scanner.nextLine();
+
+            String destId = getDestId(islandName, apiKey, apiHost);
             System.out.println(destId);
-            List<String> jsonHotelList = searchHotels(destId, "2024-02-15", "2024-02-20", "1", "1");
-            for (String hotel : jsonHotelList){
-                System.out.println("Hotel Info: " + hotel);
-            }
-            List<Hotel> hotelList = convertJsonListToHotelList(jsonHotelList);
-            return hotelList;
+
+            List<String> jsonHotelList = searchHotels(destId, checkinDate, checkoutDate, adultsNumber, childrensNumber, childrensAge, roomNumber);
+
+            return convertJsonListToHotelList(jsonHotelList);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new MyHotelException("Error in call processing", e);
         }
     }
-    public static String getDestId(String islandName) throws Exception {
-        String apiKey = "77f0f6e079msh3c7c501786eb1d0p1f2305jsndf8f225650c8";
-        String apiHost = "booking-com.p.rapidapi.com";
+    public static String getDestId(String islandName, String apiKey, String apiHost) throws Exception {
         String name = islandName;
         String locale = "es";
-
-        // Construir la URL con parámetros
         String url = "https://booking-com.p.rapidapi.com/v1/hotels/locations";
         Map<String, String> params = new HashMap<>();
         params.put("name", name);
         params.put("locale", locale);
         url = buildUrlWithParams1(url, params);
-
-        // Crear la solicitud HTTP
         HttpClient client = HttpClientBuilder.create().build();
         HttpGet request = new HttpGet(url);
-
-        // Configurar las cabeceras
         request.setHeader("X-RapidAPI-Key", apiKey);
         request.setHeader("X-RapidAPI-Host", apiHost);
-
-        // Realizar la solicitud
         HttpResponse response = client.execute(request);
-
         String responseBody = org.apache.http.util.EntityUtils.toString(response.getEntity());
-
-        // Extraer dest_id del cuerpo de la respuesta
         return extractDestId(responseBody);
     }
 
     private static String buildUrlWithParams1(String baseUrl, Map<String, String> params) {
         StringBuilder urlBuilder = new StringBuilder(baseUrl);
+
         if (!params.isEmpty()) {
             urlBuilder.append("?");
             for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -86,44 +98,50 @@ public class BookingHotelsProvider implements HotelsProvider {
         }
         return null;
     }
-    public List<String> searchHotels(String destId, String checkinDate, String checkoutDate, String adultsNumber, String roomNumber) {
+    public List<String> searchHotels(String destId, String checkinDate, String checkoutDate, String adultsNumber, String childrensNumber, String childrensAge, String roomNumber) {
         try {
             String apiKey = "77f0f6e079msh3c7c501786eb1d0p1f2305jsndf8f225650c8";
             String apiHost = "booking-com.p.rapidapi.com";
-
-            // Construir la URL con parámetros
-            String url = "https://booking-com.p.rapidapi.com/v1/hotels/search";
-            Map<String, String> params = new HashMap<>();
-            params.put("units", "metric");
-            params.put("dest_id", destId);
-            params.put("dest_type", "region");
-            params.put("room_number", roomNumber);
-            params.put("checkin_date", checkinDate);
-            params.put("checkout_date", checkoutDate);
-            params.put("order_by", "popularity");
-            params.put("locale", "es");
-            params.put("adults_number", adultsNumber);
-            params.put("filter_by_currency", "EUR");
-            params.put("include_adjacency", "true");
-            url = buildUrlWithParams2(url, params);
-
-            // Crear la solicitud HTTP
-            HttpClient client = HttpClientBuilder.create().build();
-            HttpGet request = new HttpGet(url);
-
-            // Configurar las cabeceras
-            request.setHeader("X-RapidAPI-Key", apiKey);
-            request.setHeader("X-RapidAPI-Host", apiHost);
-
-            // Realizar la solicitud
-            HttpResponse response = client.execute(request);
+            String url = buildSearchUrl(destId, checkinDate, checkoutDate, adultsNumber, childrensNumber, childrensAge, roomNumber);
+            HttpGet request = createHttpGetRequest(url, apiKey, apiHost);
+            HttpResponse response = executeHttpRequest(request);
             String responseBody = org.apache.http.util.EntityUtils.toString(response.getEntity());
-
-            // Procesar la respuesta y construir la lista de strings
             return processHotelSearchResponse(responseBody);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String buildSearchUrl(String destId, String checkinDate, String checkoutDate, String adultsNumber, String childrensNumber, String childrensAge, String roomNumber) {
+        String baseUrl = "https://booking-com.p.rapidapi.com/v1/hotels/search";
+        Map<String, String> params = new HashMap<>();
+        params.put("units", "metric");
+        params.put("dest_id", destId);
+        params.put("dest_type", "region");
+        params.put("room_number", roomNumber);
+        params.put("checkin_date", checkinDate);
+        params.put("checkout_date", checkoutDate);
+        params.put("order_by", "popularity");
+        params.put("locale", "es");
+        params.put("adults_number", adultsNumber);
+        params.put("filter_by_currency", "EUR");
+        params.put("children_number", childrensNumber);
+        params.put("children_ages", childrensAge);
+        params.put("include_adjacency", "true");
+        return buildUrlWithParams2(baseUrl, params);
+    }
+
+    private HttpGet createHttpGetRequest(String url, String apiKey, String apiHost) {
+        HttpClient client = HttpClientBuilder.create().build();
+        HttpGet request = new HttpGet(url);
+        request.setHeader("X-RapidAPI-Key", apiKey);
+        request.setHeader("X-RapidAPI-Host", apiHost);
+        return request;
+    }
+
+    private HttpResponse executeHttpRequest(HttpGet request) throws IOException {
+        HttpClient client = HttpClientBuilder.create().build();
+        return client.execute(request);
     }
 
     private static List<String> processHotelSearchResponse(String responseBody) {
@@ -143,6 +161,7 @@ public class BookingHotelsProvider implements HotelsProvider {
 
     private static String buildUrlWithParams2(String baseUrl, Map<String, String> params) {
         StringBuilder urlBuilder = new StringBuilder(baseUrl);
+
         if (!params.isEmpty()) {
             urlBuilder.append("?");
             for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -150,6 +169,7 @@ public class BookingHotelsProvider implements HotelsProvider {
             }
             urlBuilder.deleteCharAt(urlBuilder.length() - 1); // Eliminar el último "&"
         }
+
         return urlBuilder.toString();
     }
     public static List<Hotel> convertJsonListToHotelList(List<String> jsonList) {
@@ -159,7 +179,6 @@ public class BookingHotelsProvider implements HotelsProvider {
         for (String jsonString : jsonList) {
             try {
                 JsonNode jsonNode = objectMapper.readTree(jsonString);
-                // Extract relevant information from jsonNode and create a Hotel object
                 Hotel hotel = createHotelFromJsonNode(jsonNode);
                 hotelList.add(hotel);
             } catch (IOException e) {
@@ -171,25 +190,73 @@ public class BookingHotelsProvider implements HotelsProvider {
     }
 
     private static Hotel createHotelFromJsonNode(JsonNode jsonNode) {
-        // Extract relevant fields from jsonNode and create a Hotel object
-        String id = jsonNode.path("id").asText("");
-        String name = jsonNode.path("hotel_name").asText("");
-        String location = jsonNode.path("city").asText("");
+        String id = extractId(jsonNode);
+        String name = extractName(jsonNode);
+        String location = extractLocation(jsonNode);
+        double totalPriceAfterTaxesAndDiscount = extractTotalPrice(jsonNode);
+        double pricePerNightAfterTaxesAndDiscount = extractPricePerNight(jsonNode);
+        double discountPercentageForOnlineBooking = extractDiscountPercentage(jsonNode);
+        String review = extractReview(jsonNode);
+        String reviewNumber = extractReviewNumber(jsonNode);
+        String distanceToCenter = extractDistanceToCenter(jsonNode);
+        String starsNumber = extractStarsNumber(jsonNode);
+        boolean freeCancellation = extractFreeCancellation(jsonNode);
+        List<String> services = extractServices(jsonNode);
 
+        return new Hotel(id, name, location, totalPriceAfterTaxesAndDiscount,
+                pricePerNightAfterTaxesAndDiscount, discountPercentageForOnlineBooking,
+                review, reviewNumber, distanceToCenter, starsNumber, freeCancellation, services);
+    }
+
+    private static String extractId(JsonNode jsonNode) {
+        return jsonNode.path("id").asText("");
+    }
+
+    private static String extractName(JsonNode jsonNode) {
+        return jsonNode.path("hotel_name").asText("");
+    }
+
+    private static String extractLocation(JsonNode jsonNode) {
+        return jsonNode.path("city").asText("");
+    }
+
+    private static double extractTotalPrice(JsonNode jsonNode) {
         JsonNode priceNode = jsonNode.path("composite_price_breakdown");
-        double totalPriceAfterTaxesAndDiscount = priceNode.path("gross_amount").asDouble(0.0);
-        double pricePerNightAfterTaxesAndDiscount = priceNode.path("gross_amount_per_night").asDouble(0.0);
+        return priceNode.path("gross_amount").asDouble(0.0);
+    }
 
+    private static double extractPricePerNight(JsonNode jsonNode) {
+        JsonNode priceNode = jsonNode.path("composite_price_breakdown");
+        return priceNode.path("gross_amount_per_night").asDouble(0.0);
+    }
+
+    private static double extractDiscountPercentage(JsonNode jsonNode) {
+        JsonNode priceNode = jsonNode.path("composite_price_breakdown");
         JsonNode benefitsNode = priceNode.path("benefits");
-        double discountPercentageForOnlineBooking = benefitsNode.path(2).path("item_amount").path("value").asDouble(0.0);
+        return benefitsNode.path(2).path("item_amount").path("value").asDouble(0.0);
+    }
 
-        String review = jsonNode.path("review_score_word").asText("");
-        String reviewNumber = jsonNode.path("review_nr").asText("");
-        String distanceToCenter = jsonNode.path("distance_to_cc_formatted").asText("");
-        String starsNumber = jsonNode.path("starsNumber").asText("");
-        boolean freeCancellation = jsonNode.path("is_free_cancellable").asInt(0) == 1;
+    private static String extractReview(JsonNode jsonNode) {
+        return jsonNode.path("review_score_word").asText("");
+    }
 
-        // Extract services from the "hotel_facilities" field
+    private static String extractReviewNumber(JsonNode jsonNode) {
+        return jsonNode.path("review_nr").asText("");
+    }
+
+    private static String extractDistanceToCenter(JsonNode jsonNode) {
+        return jsonNode.path("distance_to_cc_formatted").asText("");
+    }
+
+    private static String extractStarsNumber(JsonNode jsonNode) {
+        return jsonNode.path("starsNumber").asText("");
+    }
+
+    private static boolean extractFreeCancellation(JsonNode jsonNode) {
+        return jsonNode.path("is_free_cancellable").asInt(0) == 1;
+    }
+
+    private static List<String> extractServices(JsonNode jsonNode) {
         JsonNode facilitiesNode = jsonNode.path("hotel_facilities");
         List<String> services = new ArrayList<>();
         if (facilitiesNode != null && facilitiesNode.isArray()) {
@@ -197,9 +264,6 @@ public class BookingHotelsProvider implements HotelsProvider {
                 services.add(facility.asText(""));
             }
         }
-
-        return new Hotel(id, name, location, totalPriceAfterTaxesAndDiscount,
-                pricePerNightAfterTaxesAndDiscount, discountPercentageForOnlineBooking,
-                review, reviewNumber, distanceToCenter, starsNumber, freeCancellation, services);
+        return services;
     }
 }

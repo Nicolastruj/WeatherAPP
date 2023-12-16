@@ -6,5 +6,5 @@ import org.ulpgc.dacd.model.Hotel;
 import java.util.List;
 
 public interface HotelsProvider {
-    public List<Hotel> getHotels(String islandName);
+    public List<Hotel> getHotels() throws MyHotelException;
 }
