@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="40th commit booking receive ok">
-      <change afterPath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/BookingEventsStore.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/HotelsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/HotelsStore.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/MyHotelException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/BookingHotelsProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/BookingHotelsProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/HotelsProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/HotelsProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/Main.java" afterDir="false" />
-    </list>
+    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="41th commit booking more modularized" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -324,7 +315,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702734313384</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="41th commit booking more modularized">
+      <option name="closed" value="true" />
+      <created>1702744405033</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1702744405033</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -339,7 +338,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="3th commit change at the url" />
     <MESSAGE value="4th commit change in serialization way from json to jackson to serialize Instant class" />
     <MESSAGE value="5th commit Weather object serializable" />
     <MESSAGE value="6th commit RunTask completed" />
@@ -364,6 +362,7 @@
     <MESSAGE value="38th commit tipster" />
     <MESSAGE value="39th commit booking receive ok" />
     <MESSAGE value="40th commit booking receive ok" />
-    <option name="LAST_COMMIT_MESSAGE" value="40th commit booking receive ok" />
+    <MESSAGE value="41th commit booking more modularized" />
+    <option name="LAST_COMMIT_MESSAGE" value="41th commit booking more modularized" />
   </component>
 </project>
