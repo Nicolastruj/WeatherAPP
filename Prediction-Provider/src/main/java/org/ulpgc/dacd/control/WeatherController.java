@@ -21,7 +21,7 @@ public class WeatherController {
     }
 
     public void runTask(){
-        scheduler.scheduleAtFixedRate(this::task, 0, 6, TimeUnit.HOURS);
+        scheduler.scheduleAtFixedRate(this::task, 0, 6, TimeUnit.SECONDS);
     }
     private void task() {
         try {

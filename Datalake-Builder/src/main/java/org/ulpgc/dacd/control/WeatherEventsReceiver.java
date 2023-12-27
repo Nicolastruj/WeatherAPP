@@ -15,29 +15,41 @@ import java.time.format.DateTimeFormatter;
 
 public class WeatherEventsReceiver implements EventsReceiver{
     private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;
-    private static String subject = "topic prediction.Weather";
+    private static String subject = "prediction.Weather";
     private static String baseDirectory = "eventstore/prediction.Weather/";
+    private static String clientID = "Datalake-Builder";
     public void receive() throws MyWeatherException {
         try {
             Connection connection = createAndStartConnection();
             Session session = createSession(connection);
-            Destination destination = createDestination(session);
+            Topic destination = createDestination(session);
             MessageConsumer consumer = createMessageConsumer(session, destination);
-            while (true) {
-                Message message = consumer.receive();
-                if (message instanceof TextMessage) {
-                    TextMessage textMessage = (TextMessage) message;
-                    handleTextMessage(textMessage);
-                }
-            }
-        } catch (JMSException | IOException e) {
+            setupMessageListener(consumer);
+        } catch (JMSException e) {
             throw new MyWeatherException("Error in JMS processing", e);
         }
     }
 
+    private void setupMessageListener(MessageConsumer consumer) throws JMSException {
+        consumer.setMessageListener(message -> {
+            if (message instanceof TextMessage) {
+                TextMessage textMessage = (TextMessage) message;
+                try {
+                    handleTextMessage(textMessage);
+                } catch (JMSException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
+
+
     private Connection createAndStartConnection() throws JMSException {
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
         Connection connection = connectionFactory.createConnection();
+        connection.setClientID(clientID);
         connection.start();
         return connection;
     }
@@ -46,12 +58,12 @@ public class WeatherEventsReceiver implements EventsReceiver{
         return connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
     }
 
-    private Destination createDestination(Session session) throws JMSException {
-        return session.createQueue(subject);
+    private Topic createDestination(Session session) throws JMSException {
+        return session.createTopic(subject);
     }
 
-    private MessageConsumer createMessageConsumer(Session session, Destination destination) throws JMSException {
-        return session.createConsumer(destination);
+    private MessageConsumer createMessageConsumer(Session session, Topic destination) throws JMSException {
+        return session.createDurableSubscriber(destination,clientID + "-" + subject);
     }
 
     private void handleTextMessage(TextMessage textMessage) throws JMSException, IOException {
@@ -82,14 +94,17 @@ public class WeatherEventsReceiver implements EventsReceiver{
     private String formatLocalDateTime(LocalDateTime localDateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         return localDateTime.format(formatter);
-    }
+    }//TODO recordar que en el momento del arranque la business unit no va a tener datos del broker porque los weather son cada 6 h por lo tanto en el momento del arranque hay que cogerlos del datalake y luego sigues con los del broker, es solo en el momento del arranque para tener datos
 
     private String getSS(JsonObject jsonObjectWeather) {
         return jsonObjectWeather.get("ss").getAsString();
     }
     private File createEventStoreDirectory(String ss) {
         File eventStoreDirectory = new File(baseDirectory + ss + "/");
-        eventStoreDirectory.mkdirs();
+        if (!eventStoreDirectory.exists()) {
+            System.out.println("Creating directory: " + eventStoreDirectory.getAbsolutePath());  // Agregar este registro
+            eventStoreDirectory.mkdirs();
+        }
         return eventStoreDirectory;
     }
 
@@ -101,6 +116,9 @@ public class WeatherEventsReceiver implements EventsReceiver{
         File eventFile = new File(fileName);
         try (FileWriter writer = new FileWriter(eventFile, true)) {
             writer.write(eventData + System.lineSeparator());
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());  // Agregar este registro
+            throw e;
         }
     }
 }

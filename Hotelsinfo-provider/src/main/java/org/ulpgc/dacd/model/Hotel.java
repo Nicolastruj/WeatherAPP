@@ -30,4 +30,52 @@ public class Hotel {
         this.freeCancelation = freeCancelation;
         this.services = services;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public double getPricePerNight() {
+        return pricePerNight;
+    }
+
+    public double getDiscountPerNightForBookingOnline() {
+        return discountPerNightForBookingOnline;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public String getReviewNumber() {
+        return reviewNumber;
+    }
+
+    public String getDistanceToCenter() {
+        return distanceToCenter;
+    }
+
+    public String getStarsNumber() {
+        return starsNumber;
+    }
+
+    public boolean isFreeCancelation() {
+        return freeCancelation;
+    }
+
+    public List<String> getServices() {
+        return services;
+    }
 }

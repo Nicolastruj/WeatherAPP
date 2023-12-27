@@ -1,15 +1,9 @@
 package org.ulpgc.dacd.control;
 
-import org.ulpgc.dacd.model.Hotel;
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
-        HotelsProvider bookingProvider = new BookingHotelsProvider();
-        try {
-            List<Hotel> hotelList = bookingProvider.getHotels();
-        } catch (MyHotelException e) {
-            throw new RuntimeException(e);
-        }
+        HotelsProvider bookingHotelsProvider = new BookingHotelsProvider();
+        HotelsStore bookingHotelsStorer = new BookingEventsStore();
+        HotelsController controller = new HotelsController(bookingHotelsProvider, bookingHotelsStorer);
     }
 }
