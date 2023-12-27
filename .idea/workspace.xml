@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="42th commit workspace">
-      <change afterPath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/InstantTypeAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datalake-Builder/src/main/java/org/ulpgc/dacd/control/WeatherEventsReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/Datalake-Builder/src/main/java/org/ulpgc/dacd/control/WeatherEventsReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/BookingEventsStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/BookingEventsStore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/HotelsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/HotelsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/HotelsStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/HotelsStore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hotelsinfo-provider/src/main/java/org/ulpgc/dacd/control/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Prediction-Provider/src/main/java/org/ulpgc/dacd/control/WeatherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Prediction-Provider/src/main/java/org/ulpgc/dacd/control/WeatherController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Prediction-Provider/src/main/java/org/ulpgc/dacd/control/WeatherEventsStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/Prediction-Provider/src/main/java/org/ulpgc/dacd/control/WeatherEventsStore.java" afterDir="false" />
-    </list>
+    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="43th commit going to add the check in check out date to Hotel Object" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -341,7 +331,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702744510917</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="43th commit going to add the check in check out date to Hotel Object">
+      <option name="closed" value="true" />
+      <created>1703673260552</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1703673260552</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -356,7 +354,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="5th commit Weather object serializable" />
     <MESSAGE value="6th commit RunTask completed" />
     <MESSAGE value="7th commit WeatherStore started" />
     <MESSAGE value="8th commit TODO added" />
@@ -381,6 +378,7 @@
     <MESSAGE value="40th commit booking receive ok" />
     <MESSAGE value="41th commit booking more modularized" />
     <MESSAGE value="42th commit workspace" />
-    <option name="LAST_COMMIT_MESSAGE" value="42th commit workspace" />
+    <MESSAGE value="43th commit going to add the check in check out date to Hotel Object" />
+    <option name="LAST_COMMIT_MESSAGE" value="43th commit going to add the check in check out date to Hotel Object" />
   </component>
 </project>
