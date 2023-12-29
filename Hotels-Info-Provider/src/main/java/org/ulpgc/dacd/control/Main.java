@@ -5,5 +5,6 @@ public class Main {
         HotelsProvider bookingHotelsProvider = new BookingHotelsProvider();
         HotelsStore bookingHotelsStorer = new BookingEventsStore();
         HotelsController controller = new HotelsController(bookingHotelsProvider, bookingHotelsStorer);
+        controller.runTask();
     }
 }

@@ -11,7 +11,7 @@ import java.time.Instant;
 
 public class BookingEventsStore implements HotelsStore{
     private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;
-    private static String subject = "prediction:Hotel";
+    private static String subject = "prediction.Hotel";
     @Override
     public void save(Hotel hotelPrediction) throws MyHotelException {
         Connection connection = null;
@@ -46,7 +46,7 @@ public class BookingEventsStore implements HotelsStore{
         return connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
     }
 
-    private Destination createDestination(Session session, Hotel hotel) throws JMSException {
+    private Destination createDestination(Session session) throws JMSException {
         return session.createTopic(subject);
     }
 

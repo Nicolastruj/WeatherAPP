@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
+
 import javax.jms.*;
 import java.io.File;
 import java.io.FileWriter;
@@ -13,11 +14,11 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-public class WeatherEventsReceiver implements EventsReceiver{
+public class HotelEventsReceiver implements EventsReceiver{
     private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;
-    private static String subject = "prediction.Weather";
-    private static String baseDirectory = "eventstore/prediction.Weather/";
-    private static String clientID = "Datalake-Builder";
+    private static String subject = "prediction.Hotel";
+    private static String baseDirectory = "eventstore/prediction.Hotel/";
+    private static String clientID = "Datalake-Builder-2";
     public void receive() throws MySoftwareException {
         try {
             Connection connection = createAndStartConnection();
@@ -122,3 +123,4 @@ public class WeatherEventsReceiver implements EventsReceiver{
         }
     }
 }
+

@@ -91,7 +91,7 @@ public class OpenWeatherMapProvider implements WeatherProvider {
         Instant predictionTime = extractPredictionTime(prediction);
         Instant ts = Instant.now();
 
-        return new Weather(temperature, possibilityOfPrecipitation, humidity, cloudiness, windSpeed, predictionTime, location, ts, "weather-provider");
+        return new Weather(temperature, possibilityOfPrecipitation, humidity, cloudiness, windSpeed, predictionTime, location, ts, "Prediction-Provider");
     }
 
     private double extractTemperature(JsonObject prediction) {

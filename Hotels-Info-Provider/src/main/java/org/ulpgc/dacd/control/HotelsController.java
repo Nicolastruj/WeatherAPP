@@ -1,9 +1,7 @@
 package org.ulpgc.dacd.control;
 
+import com.google.gson.Gson;
 import org.ulpgc.dacd.model.Hotel;
-import org.ulpgc.dacd.model.Location;
-
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -30,3 +28,4 @@ public class HotelsController {
         }
     }
 }
+//TODO quitar el gson

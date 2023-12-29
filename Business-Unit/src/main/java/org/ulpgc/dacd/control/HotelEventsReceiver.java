@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
+
 import javax.jms.*;
 import java.io.File;
 import java.io.FileWriter;
@@ -13,11 +14,11 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-public class WeatherEventsReceiver implements EventsReceiver{
+public class HotelEventsReceiver implements EventsReceiver{
     private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;
-    private static String subject = "prediction.Weather";
-    private static String baseDirectory = "eventstore/prediction.Weather/";
-    private static String clientID = "Datalake-Builder";
+    private static String subject = "prediction.Hotel";
+    private static String baseDirectory = "eventstore/prediction.Hotel/";
+    private static String clientID = "Business-Unit";
     public void receive() throws MySoftwareException {
         try {
             Connection connection = createAndStartConnection();
@@ -73,7 +74,7 @@ public class WeatherEventsReceiver implements EventsReceiver{
         LocalDateTime localDateTime = parseToLocalDateTime(callInstantValue);
         String formattedDate = formatLocalDateTime(localDateTime);
         String ss = getSS(jsonObjectWeather);
-        File eventStoreDirectory = createEventStoreDirectory(ss);
+        createEventStoreDirectory(ss);
         String fileName = createFileName(ss, formattedDate);
         writeToFile(eventData, fileName);
     }
@@ -102,8 +103,14 @@ public class WeatherEventsReceiver implements EventsReceiver{
     private File createEventStoreDirectory(String ss) {
         File eventStoreDirectory = new File(baseDirectory + ss + "/");
         if (!eventStoreDirectory.exists()) {
-            System.out.println("Creating directory: " + eventStoreDirectory.getAbsolutePath());  // Agregar este registro
-            eventStoreDirectory.mkdirs();
+            System.out.println("Creating directory: " + eventStoreDirectory.getAbsolutePath());
+            if (eventStoreDirectory.mkdirs()) {
+                System.out.println("Directory created successfully!");
+            } else {
+                System.out.println("Failed to create directory.");
+            }
+        } else {
+            System.out.println("Directory already exists: " + eventStoreDirectory.getAbsolutePath());
         }
         return eventStoreDirectory;
     }
@@ -122,3 +129,4 @@ public class WeatherEventsReceiver implements EventsReceiver{
         }
     }
 }
+

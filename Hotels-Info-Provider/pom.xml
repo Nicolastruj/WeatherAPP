@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>Hotelsinfo-provider</artifactId>
+    <artifactId>Hotels-Info-Provider</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

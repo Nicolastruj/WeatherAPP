@@ -1,5 +1,6 @@
 package org.ulpgc.dacd.model;
 
+import java.time.Instant;
 import java.util.List;
 
 public class Hotel {
@@ -15,7 +16,11 @@ public class Hotel {
     private final String starsNumber;
     private final boolean freeCancelation;
     private final List<String> services;
-    public Hotel(String id, String name, String location, double price, double pricePerNight, double discountPerNightForBookingOnline, String review, String reviewNumber, String distanceToCenter, String starsNumber, boolean freeCancelation, List<String> services){
+    private final String cehckIn;
+    private final String checkOut;
+    private final Instant ts;
+    private final String ss;
+    public Hotel(String id, String name, String location, double price, double pricePerNight, double discountPerNightForBookingOnline, String review, String reviewNumber, String distanceToCenter, String starsNumber, boolean freeCancelation, List<String> services, String cehckIn, String checkOut, Instant ts, String ss){
 
         this.id = id;
         this.name = name;
@@ -29,6 +34,10 @@ public class Hotel {
         this.starsNumber = starsNumber;
         this.freeCancelation = freeCancelation;
         this.services = services;
+        this.cehckIn = cehckIn;
+        this.checkOut = checkOut;
+        this.ts = ts;
+        this.ss = ss;
     }
 
     public String getId() {
@@ -77,5 +86,21 @@ public class Hotel {
 
     public List<String> getServices() {
         return services;
+    }
+
+    public String getCehckIn() {
+        return cehckIn;
+    }
+
+    public String getCheckOut() {
+        return checkOut;
+    }
+
+    public Instant getTs() {
+        return ts;
+    }
+
+    public String getSs() {
+        return ss;
     }
 }

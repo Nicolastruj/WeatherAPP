@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.ulpgc.dacd.model.Hotel;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.*;
 
 public class BookingHotelsProvider implements HotelsProvider {
@@ -52,7 +53,7 @@ public class BookingHotelsProvider implements HotelsProvider {
 
             List<String> jsonHotelList = searchHotels(destId, checkinDate, checkoutDate, adultsNumber, childrensNumber, childrensAge, roomNumber);
 
-            return convertJsonListToHotelList(jsonHotelList);
+            return convertJsonListToHotelList(jsonHotelList, checkinDate, checkoutDate);
         } catch (Exception e) {
             throw new MyHotelException("Error in call processing", e);
         }
@@ -172,14 +173,14 @@ public class BookingHotelsProvider implements HotelsProvider {
 
         return urlBuilder.toString();
     }
-    public static List<Hotel> convertJsonListToHotelList(List<String> jsonList) {
+    public static List<Hotel> convertJsonListToHotelList(List<String> jsonList, String checkInDate, String checkOutDate) {
         List<Hotel> hotelList = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
 
         for (String jsonString : jsonList) {
             try {
                 JsonNode jsonNode = objectMapper.readTree(jsonString);
-                Hotel hotel = createHotelFromJsonNode(jsonNode);
+                Hotel hotel = createHotelFromJsonNode(jsonNode, checkInDate, checkOutDate);
                 hotelList.add(hotel);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -189,7 +190,7 @@ public class BookingHotelsProvider implements HotelsProvider {
         return hotelList;
     }
 
-    private static Hotel createHotelFromJsonNode(JsonNode jsonNode) {
+    private static Hotel createHotelFromJsonNode(JsonNode jsonNode, String checkIn, String checkOut) {
         String id = extractId(jsonNode);
         String name = extractName(jsonNode);
         String location = extractLocation(jsonNode);
@@ -205,7 +206,7 @@ public class BookingHotelsProvider implements HotelsProvider {
 
         return new Hotel(id, name, location, totalPriceAfterTaxesAndDiscount,
                 pricePerNightAfterTaxesAndDiscount, discountPercentageForOnlineBooking,
-                review, reviewNumber, distanceToCenter, starsNumber, freeCancellation, services);
+                review, reviewNumber, distanceToCenter, starsNumber, freeCancellation, services, checkIn, checkOut, Instant.now(), "Hotels-InfoProvider");
     }
 
     private static String extractId(JsonNode jsonNode) {
