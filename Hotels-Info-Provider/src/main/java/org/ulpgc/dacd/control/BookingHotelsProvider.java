@@ -203,10 +203,11 @@ public class BookingHotelsProvider implements HotelsProvider {
         String starsNumber = extractStarsNumber(jsonNode);
         boolean freeCancellation = extractFreeCancellation(jsonNode);
         List<String> services = extractServices(jsonNode);
+        Instant ts = Instant.now();
 
         return new Hotel(id, name, location, totalPriceAfterTaxesAndDiscount,
                 pricePerNightAfterTaxesAndDiscount, discountPercentageForOnlineBooking,
-                review, reviewNumber, distanceToCenter, starsNumber, freeCancellation, services, checkIn, checkOut, Instant.now(), "Hotels-InfoProvider");
+                review, reviewNumber, distanceToCenter, starsNumber, freeCancellation, services, checkIn, checkOut, ts, "Hotels-Info-Provider");
     }
 
     private static String extractId(JsonNode jsonNode) {
