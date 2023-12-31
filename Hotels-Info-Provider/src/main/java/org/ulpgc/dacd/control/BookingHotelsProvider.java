@@ -17,37 +17,10 @@ import java.util.*;
 public class BookingHotelsProvider implements HotelsProvider {
 
     @Override
-    public List<Hotel> getHotels() throws MyHotelException {
+    public List<Hotel> getHotels(String apiKey, String apiHost, String checkinDate, String checkoutDate,
+                                 String adultsNumber, String childrensNumber, String childrensAge, String roomNumber,
+                                 String islandName) throws MyHotelException {
         try {
-            Scanner scanner = new Scanner(System.in);
-
-            System.out.print("Ingrese la apiKey: ");
-            String apiKey = scanner.nextLine();
-
-            System.out.print("Ingrese el apiHost: ");
-            String apiHost = scanner.nextLine();
-
-            System.out.print("Ingrese la fecha de checkin (YYYY-MM-DD): ");
-            String checkinDate = scanner.nextLine();
-
-            System.out.print("Ingrese la fecha de checkout (YYYY-MM-DD): ");
-            String checkoutDate = scanner.nextLine();
-
-            System.out.print("Ingrese el número de adultos: ");
-            String adultsNumber = scanner.nextLine();
-
-            System.out.print("Ingrese el número de niños: ");
-            String childrensNumber = scanner.nextLine();
-
-            System.out.print("Ingrese la edad de los niños: ");
-            String childrensAge = scanner.nextLine();
-
-            System.out.print("Ingrese el número de habitaciones: ");
-            String roomNumber = scanner.nextLine();
-
-            System.out.print("Ingrese el nombre de la isla: ");
-            String islandName = scanner.nextLine();
-
             String destId = getDestId(islandName, apiKey, apiHost);
             System.out.println(destId);
 
@@ -102,7 +75,7 @@ public class BookingHotelsProvider implements HotelsProvider {
     public List<String> searchHotels(String destId, String checkinDate, String checkoutDate, String adultsNumber, String childrensNumber, String childrensAge, String roomNumber) {
         try {
             String apiKey = "77f0f6e079msh3c7c501786eb1d0p1f2305jsndf8f225650c8";
-            String apiHost = "booking-com.p.rapidapi.com";
+            String apiHost = "booking-com.p.rapidapi.com";//TODO que reciba la apikey y apihost como parametros
             String url = buildSearchUrl(destId, checkinDate, checkoutDate, adultsNumber, childrensNumber, childrensAge, roomNumber);
             HttpGet request = createHttpGetRequest(url, apiKey, apiHost);
             HttpResponse response = executeHttpRequest(request);

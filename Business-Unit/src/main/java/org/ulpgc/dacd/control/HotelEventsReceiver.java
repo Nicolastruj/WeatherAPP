@@ -102,9 +102,18 @@ public class HotelEventsReceiver implements EventsReceiver{
     }
     private File createEventStoreDirectory(String ss) {
         File eventStoreDirectory = new File(baseDirectory + ss + "/");
+
         if (!eventStoreDirectory.exists()) {
-            eventStoreDirectory.mkdirs();
+            boolean directoriesCreated = eventStoreDirectory.mkdirs();
+            if (directoriesCreated) {
+                System.out.println("Directorio creado exitosamente en: " + eventStoreDirectory.getAbsolutePath());
+            } else {
+                System.out.println("No se pudo crear el directorio: " + eventStoreDirectory.getAbsolutePath());
+            }
+        } else {
+            System.out.println("El directorio ya existe: " + eventStoreDirectory.getAbsolutePath());
         }
+
         return eventStoreDirectory;
     }
 

@@ -4,12 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="45th commit events store">
+    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="46th commit hotel events received succefully">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datalake-Builder/src/main/java/org/ulpgc/dacd/control/HotelEventsReceiver.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/HotelEventsReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/HotelEventsReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datalake-Builder/src/main/java/org/ulpgc/dacd/control/EventsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Datalake-Builder/src/main/java/org/ulpgc/dacd/control/EventsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datalake-Builder/src/main/java/org/ulpgc/dacd/control/WeatherEventsReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/Datalake-Builder/src/main/java/org/ulpgc/dacd/control/WeatherEventsReceiver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/control/BookingHotelsProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/control/BookingHotelsProvider.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/control/HotelsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/control/HotelsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eventstore/prediction.Weather/Prediction-Provider/20231229.events" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/control/HotelsProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/control/HotelsProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/control/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventstore/prediction.Hotel/Hotels-Info-Provider/20231231.events" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +82,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.ulpgc.dacd.control.Main" />
       <module name="Business-Unit" />
-      <option name="PROGRAM_PARAMETERS" value="c16c1f95d5c42556e7fda6ae8052e134" />
+      <option name="PROGRAM_PARAMETERS" value="77f0f6e079msh3c7c501786eb1d0p1f2305jsndf8f225650c8 booking-com.p.rapidapi.com 1 1 3 1" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.ulpgc.dacd.control.*" />
@@ -378,7 +382,15 @@
       <option name="project" value="LOCAL" />
       <updated>1703853373536</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="46th commit hotel events received succefully">
+      <option name="closed" value="true" />
+      <created>1704020960207</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1704020960207</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -393,7 +405,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="8th commit TODO added" />
     <MESSAGE value="9th commit units added" />
     <MESSAGE value="10th commit storer and some changes on weather creator" />
     <MESSAGE value="10th commit changes to do in storer and provider" />
@@ -418,6 +429,7 @@
     <MESSAGE value="43th commit going to add the check in check out date to Hotel Object" />
     <MESSAGE value="44th commit business unit created trying to receive hotel events" />
     <MESSAGE value="45th commit events store" />
-    <option name="LAST_COMMIT_MESSAGE" value="45th commit events store" />
+    <MESSAGE value="46th commit hotel events received succefully" />
+    <option name="LAST_COMMIT_MESSAGE" value="46th commit hotel events received succefully" />
   </component>
 </project>

@@ -8,7 +8,7 @@ public class EventsController {
     }
     public void runTask(){
         try {
-            task();
+            task();//TODO hacer que reciba otra vez
         } catch (MySoftwareException e) {
             throw new RuntimeException(e);
         }
