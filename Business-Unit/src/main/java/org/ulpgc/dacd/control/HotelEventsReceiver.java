@@ -6,19 +6,20 @@ import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 
-public class HotelEventsReceiver implements EventsReceiver{
+public class HotelEventsReceiver implements EventsReceiver {
     private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;
     private static String subject = "prediction.Hotel";
-    private static String baseDirectory = "eventstore/prediction.Hotel/";
+    private static String dbUrl = "jdbc:mysql://localhost:3306/tu_base_de_datos";
+    private static String dbUser = "tu_usuario";
+    private static String dbPassword = "tu_contraseña";
+
     private static String clientID = "Business-Unit";
+
     public void receive() throws MySoftwareException {
         try {
             Connection connection = createAndStartConnection();
@@ -37,15 +38,12 @@ public class HotelEventsReceiver implements EventsReceiver{
                 TextMessage textMessage = (TextMessage) message;
                 try {
                     handleTextMessage(textMessage);
-                } catch (JMSException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
+                } catch (JMSException | SQLException e) {
                     throw new RuntimeException(e);
                 }
             }
         });
     }
-
 
     private Connection createAndStartConnection() throws JMSException {
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
@@ -64,71 +62,69 @@ public class HotelEventsReceiver implements EventsReceiver{
     }
 
     private MessageConsumer createMessageConsumer(Session session, Topic destination) throws JMSException {
-        return session.createDurableSubscriber(destination,clientID + "-" + subject);
+        return session.createDurableSubscriber(destination, clientID + "-" + subject);
     }
 
-    private void handleTextMessage(TextMessage textMessage) throws JMSException, IOException {
+    private void handleTextMessage(TextMessage textMessage) throws JMSException, SQLException {
         String eventData = textMessage.getText();
-        JsonObject jsonObjectWeather = parseJsonWeather(eventData);
-        String callInstantValue = getCallInstant(jsonObjectWeather);
-        LocalDateTime localDateTime = parseToLocalDateTime(callInstantValue);
-        String formattedDate = formatLocalDateTime(localDateTime);
-        String ss = getSS(jsonObjectWeather);
-        createEventStoreDirectory(ss);
-        String fileName = createFileName(ss, formattedDate);
-        writeToFile(eventData, fileName);
+        JsonObject jsonObjectHotel = parseJsonHotel(eventData);
+
+        String id = jsonObjectHotel.get("id").getAsString();
+        String name = jsonObjectHotel.get("name").getAsString();
+        String location = jsonObjectHotel.get("location").getAsString();
+        double price = jsonObjectHotel.get("price").getAsDouble();
+        double pricePerNight = jsonObjectHotel.get("pricePerNight").getAsDouble();
+        double discountPerNightForBookingOnline = jsonObjectHotel.get("discountPerNightForBookingOnline").getAsDouble();
+        String review = jsonObjectHotel.get("review").getAsString();
+        String reviewNumber = jsonObjectHotel.get("reviewNumber").getAsString();
+        String distanceToCenter = jsonObjectHotel.get("distanceToCenter").getAsString();
+        String starsNumber = jsonObjectHotel.get("starsNumber").getAsString();
+        boolean freeCancelation = jsonObjectHotel.get("freeCancelation").getAsBoolean();
+        String checkIn = jsonObjectHotel.get("checkIn").getAsString();
+        String checkOut = jsonObjectHotel.get("checkOut").getAsString();
+        Instant ts = Instant.parse(jsonObjectHotel.get("ts").getAsString());
+        String ss = jsonObjectHotel.get("ss").getAsString();
+
+        insertEventToDatabase(id, name, location, price, pricePerNight, discountPerNightForBookingOnline, review, reviewNumber, distanceToCenter, starsNumber, freeCancelation, checkIn, checkOut, ts, ss);
     }
 
-    private JsonObject parseJsonWeather(String eventData) {
+    private void insertEventToDatabase(String id, String name, String location, double price, double pricePerNight, double discountPerNightForBookingOnline, String review, String reviewNumber, String distanceToCenter, String starsNumber, boolean freeCancelation, String checkIn, String checkOut, Instant ts, String ss) throws SQLException {
+        String tableName = generateTableName(checkIn, checkOut, ss);
+        String query = "INSERT INTO " + tableName + " (id, name, location, price, pricePerNight, discountPerNightForBookingOnline, review, reviewNumber, distanceToCenter, starsNumber, freeCancelation, checkIn, checkOut, ts, ss) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (
+                java.sql.Connection connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+                PreparedStatement preparedStatement = connection.prepareStatement(query)
+        ) {
+            preparedStatement.setString(1, id);
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, location);
+            preparedStatement.setDouble(4, price);
+            preparedStatement.setDouble(5, pricePerNight);
+            preparedStatement.setDouble(6, discountPerNightForBookingOnline);
+            preparedStatement.setString(7, review);
+            preparedStatement.setString(8, reviewNumber);
+            preparedStatement.setString(9, distanceToCenter);
+            preparedStatement.setString(10, starsNumber);
+            preparedStatement.setBoolean(11, freeCancelation);
+            preparedStatement.setString(12, checkIn);
+            preparedStatement.setString(13, checkOut);
+            preparedStatement.setObject(14, ts);
+            preparedStatement.setString(15, ss);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Evento insertado exitosamente en la base de datos.");
+            } else {
+                System.out.println("No se pudo insertar el evento en la base de datos.");
+            }
+        }
+    }
+
+    private JsonObject parseJsonHotel(String eventData) {
         return JsonParser.parseString(eventData).getAsJsonObject();
     }
-
-    private String getCallInstant(JsonObject jsonObjectWeather) {
-        return jsonObjectWeather.get("ts").getAsString();
-    }
-
-    private LocalDateTime parseToLocalDateTime(String callInstantValue) {
-        Instant instant = Instant.parse(callInstantValue);
-        return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-    }
-
-    private String formatLocalDateTime(LocalDateTime localDateTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        return localDateTime.format(formatter);
-    }//TODO recordar que en el momento del arranque la business unit no va a tener datos del broker porque los weather son cada 6 h por lo tanto en el momento del arranque hay que cogerlos del datalake y luego sigues con los del broker, es solo en el momento del arranque para tener datos
-
-    private String getSS(JsonObject jsonObjectWeather) {
-        return jsonObjectWeather.get("ss").getAsString();
-    }
-    private File createEventStoreDirectory(String ss) {
-        File eventStoreDirectory = new File(baseDirectory + ss + "/");
-
-        if (!eventStoreDirectory.exists()) {
-            boolean directoriesCreated = eventStoreDirectory.mkdirs();
-            if (directoriesCreated) {
-                System.out.println("Directorio creado exitosamente en: " + eventStoreDirectory.getAbsolutePath());
-            } else {
-                System.out.println("No se pudo crear el directorio: " + eventStoreDirectory.getAbsolutePath());
-            }
-        } else {
-            System.out.println("El directorio ya existe: " + eventStoreDirectory.getAbsolutePath());
-        }
-
-        return eventStoreDirectory;
-    }
-
-    private String createFileName(String ss, String formattedDate) {
-        return baseDirectory + ss + "/" + formattedDate + ".events";
-    }
-
-    private void writeToFile(String eventData, String fileName) throws IOException {
-        File eventFile = new File(fileName);
-        try (FileWriter writer = new FileWriter(eventFile, true)) {
-            writer.write(eventData + System.lineSeparator());
-        } catch (IOException e) {
-            System.out.println("Error writing to file: " + e.getMessage());  // Agregar este registro
-            throw e;
-        }
+    private String generateTableName(String checkIn, String checkOut, String ss) {
+        return checkIn + "_" + checkOut + "_" + ss;
     }
 }
-

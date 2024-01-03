@@ -14,26 +14,17 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-public class WeatherEventsReceiver implements EventsReceiver{
+public class HotelEventsReceiver implements EventsReceiver{
     private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;
-    private static String subject = "prediction.Weather";
-    private static String baseDirectory = "eventstore/prediction.Weather/";
-    private static String clientID = "Business-Unit-2";
+    private static String subject = "prediction.Hotel";
+    private static String baseDirectory = "eventstore/prediction.Hotel/";
+    private static String clientID = "Business-Unit";
     public void receive() throws MySoftwareException {
         try {
-            System.out.println("Iniciando proceso de recepción...");
             Connection connection = createAndStartConnection();
-            System.out.println("Conexión iniciada con éxito.");
-
             Session session = createSession(connection);
-            System.out.println("Sesión creada con éxito.");
-
             Topic destination = createDestination(session);
-            System.out.println("Destino creado con éxito.");
-
             MessageConsumer consumer = createMessageConsumer(session, destination);
-            System.out.println("Consumidor creado con éxito. Esperando mensajes...");
-
             setupMessageListener(consumer);
         } catch (JMSException e) {
             throw new MySoftwareException("Error in JMS processing", e);
@@ -41,7 +32,6 @@ public class WeatherEventsReceiver implements EventsReceiver{
     }
 
     private void setupMessageListener(MessageConsumer consumer) throws JMSException {
-        System.out.println("Configurando listener de mensajes...");
         consumer.setMessageListener(message -> {
             if (message instanceof TextMessage) {
                 TextMessage textMessage = (TextMessage) message;
@@ -54,7 +44,6 @@ public class WeatherEventsReceiver implements EventsReceiver{
                 }
             }
         });
-        System.out.println("Listener de mensajes configurado y en espera.");
     }
 
 
@@ -85,7 +74,7 @@ public class WeatherEventsReceiver implements EventsReceiver{
         LocalDateTime localDateTime = parseToLocalDateTime(callInstantValue);
         String formattedDate = formatLocalDateTime(localDateTime);
         String ss = getSS(jsonObjectWeather);
-        File eventStoreDirectory = createEventStoreDirectory(ss);
+        createEventStoreDirectory(ss);
         String fileName = createFileName(ss, formattedDate);
         writeToFile(eventData, fileName);
     }
@@ -113,10 +102,18 @@ public class WeatherEventsReceiver implements EventsReceiver{
     }
     private File createEventStoreDirectory(String ss) {
         File eventStoreDirectory = new File(baseDirectory + ss + "/");
+
         if (!eventStoreDirectory.exists()) {
-            System.out.println("Creating directory: " + eventStoreDirectory.getAbsolutePath());  // Agregar este registro
-            eventStoreDirectory.mkdirs();
+            boolean directoriesCreated = eventStoreDirectory.mkdirs();
+            if (directoriesCreated) {
+                System.out.println("Directorio creado exitosamente en: " + eventStoreDirectory.getAbsolutePath());
+            } else {
+                System.out.println("No se pudo crear el directorio: " + eventStoreDirectory.getAbsolutePath());
+            }
+        } else {
+            System.out.println("El directorio ya existe: " + eventStoreDirectory.getAbsolutePath());
         }
+
         return eventStoreDirectory;
     }
 
@@ -134,3 +131,4 @@ public class WeatherEventsReceiver implements EventsReceiver{
         }
     }
 }
+
