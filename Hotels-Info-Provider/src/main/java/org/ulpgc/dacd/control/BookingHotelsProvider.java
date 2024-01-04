@@ -22,8 +22,6 @@ public class BookingHotelsProvider implements HotelsProvider {
                                  String islandName) throws MyHotelException {
         try {
             String destId = getDestId(islandName, apiKey, apiHost);
-            System.out.println(destId);
-
             List<String> jsonHotelList = searchHotels(destId, checkinDate, checkoutDate, adultsNumber, childrensNumber, childrensAge, roomNumber);
 
             return convertJsonListToHotelList(jsonHotelList, checkinDate, checkoutDate);
@@ -167,6 +165,8 @@ public class BookingHotelsProvider implements HotelsProvider {
         String id = extractId(jsonNode);
         String name = extractName(jsonNode);
         String location = extractLocation(jsonNode);
+        String latitude = jsonNode.path("latitude").asText("");
+        String longitude = jsonNode.path("longitude").asText("");
         double totalPriceAfterTaxesAndDiscount = extractTotalPrice(jsonNode);
         double pricePerNightAfterTaxesAndDiscount = extractPricePerNight(jsonNode);
         double discountPercentageForOnlineBooking = extractDiscountPercentage(jsonNode);
@@ -178,7 +178,7 @@ public class BookingHotelsProvider implements HotelsProvider {
         List<String> services = extractServices(jsonNode);
         Instant ts = Instant.now();
 
-        return new Hotel(id, name, location, totalPriceAfterTaxesAndDiscount,
+        return new Hotel(id, name, location, latitude, longitude, totalPriceAfterTaxesAndDiscount,
                 pricePerNightAfterTaxesAndDiscount, discountPercentageForOnlineBooking,
                 review, reviewNumber, distanceToCenter, starsNumber, freeCancellation, services, checkIn, checkOut, ts, "Hotels-Info-Provider");
     }

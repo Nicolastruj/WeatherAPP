@@ -7,6 +7,8 @@ public class Hotel {
     private final String id;
     private final String name;
     private final String location;
+    private final String latitude;
+    private final String longitude;
     private final double price;
     private final double pricePerNight;
     private final double discountPerNightForBookingOnline;
@@ -16,15 +18,18 @@ public class Hotel {
     private final String starsNumber;
     private final boolean freeCancelation;
     private final List<String> services;
-    private final String cehckIn;
+    private final String checkIn;
     private final String checkOut;
     private final Instant ts;
     private final String ss;
-    public Hotel(String id, String name, String location, double price, double pricePerNight, double discountPerNightForBookingOnline, String review, String reviewNumber, String distanceToCenter, String starsNumber, boolean freeCancelation, List<String> services, String cehckIn, String checkOut, Instant ts, String ss){
+
+    public Hotel(String id, String name, String location, String latitude, String longitude, double price, double pricePerNight, double discountPerNightForBookingOnline, String review, String reviewNumber, String distanceToCenter, String starsNumber, boolean freeCancelation, List<String> services, String cehckIn, String checkOut, Instant ts, String ss){
 
         this.id = id;
         this.name = name;
         this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.price = price;
         this.pricePerNight = pricePerNight;
         this.discountPerNightForBookingOnline = discountPerNightForBookingOnline;
@@ -34,7 +39,7 @@ public class Hotel {
         this.starsNumber = starsNumber;
         this.freeCancelation = freeCancelation;
         this.services = services;
-        this.cehckIn = cehckIn;
+        this.checkIn = cehckIn;
         this.checkOut = checkOut;
         this.ts = ts;
         this.ss = ss;
@@ -88,8 +93,8 @@ public class Hotel {
         return services;
     }
 
-    public String getCehckIn() {
-        return cehckIn;
+    public String getCheckIn() {
+        return checkIn;
     }
 
     public String getCheckOut() {
