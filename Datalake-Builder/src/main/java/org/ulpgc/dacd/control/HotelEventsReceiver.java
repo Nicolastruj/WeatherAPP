@@ -17,8 +17,8 @@ import java.time.format.DateTimeFormatter;
 public class HotelEventsReceiver implements EventsReceiver{
     private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;
     private static String subject = "prediction.Hotel";
-    private static String baseDirectory = "eventstore/prediction.Hotel/";
-    private static String clientID = "Business-Unit";
+    private static String baseDirectory = "Datalake-Builder/src/main/resources/eventstore/prediction.Hotel/";
+    private static String clientID = "Datalake-Builder-2";
     public void receive() throws MySoftwareException {
         try {
             Connection connection = createAndStartConnection();

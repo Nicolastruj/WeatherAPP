@@ -55,13 +55,13 @@ public class BookingEventsStore implements HotelsStore{
     }
     private TextMessage createTextMessage(Session session, Hotel hotelPrediction) throws JMSException {
         try {
-            String serializedData = serializeWeatherToJson(hotelPrediction);
+            String serializedData = serializeHotelToJson(hotelPrediction);
             return session.createTextMessage(serializedData);
         } catch (Exception e) {
             throw new JMSException("Error al crear el mensaje de texto: " + e.getMessage());
         }
     }
-    private String serializeWeatherToJson(Hotel hotel) {
+    private String serializeHotelToJson(Hotel hotel) {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Instant.class, new InstantTypeAdapter())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")

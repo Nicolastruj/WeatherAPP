@@ -1,23 +1,24 @@
 package org.ulpgc.dacd.control;
 
 public class EventsController {
-    private final EventsReceiver receiver;
+    private final EventsReceiver weatherReceiver;
+    private final EventsReceiver hotelReceiver;
 
-    public EventsController(EventsReceiver weatherEventsReceiver){
-        this.receiver = weatherEventsReceiver;
+    public EventsController(EventsReceiver weatherEventsReceiver, EventsReceiver hotelEventsReceiver) {
+        this.weatherReceiver = weatherEventsReceiver;
+        this.hotelReceiver = hotelEventsReceiver;
     }
-    public void runTask(){
+
+    public void runTask() {
         try {
-            task();//TODO hacer que reciba otra vez
+            task();
         } catch (MySoftwareException e) {
             throw new RuntimeException(e);
         }
     }
-    public void task() throws MySoftwareException {
-        this.receiver.receive();
-    }
 
-    public EventsReceiver getReceiver() {
-        return receiver;
+    public void task() throws MySoftwareException {
+        this.weatherReceiver.receive();
+        this.hotelReceiver.receive();
     }
 }

@@ -22,9 +22,9 @@ public class BookingHotelsProvider implements HotelsProvider {
                                  String islandName) throws MyHotelException {
         try {
             String destId = getDestId(islandName, apiKey, apiHost);
-            List<String> jsonHotelList = searchHotels(destId, checkinDate, checkoutDate, adultsNumber, childrensNumber, childrensAge, roomNumber);
+            Map<String, String> jsonHotelMap = searchHotels(destId, checkinDate, checkoutDate, adultsNumber, childrensNumber, childrensAge, roomNumber, islandName);
 
-            return convertJsonListToHotelList(jsonHotelList, checkinDate, checkoutDate);
+            return convertJsonListToHotelList(jsonHotelMap, checkinDate, checkoutDate);
         } catch (Exception e) {
             throw new MyHotelException("Error in call processing", e);
         }
@@ -70,7 +70,7 @@ public class BookingHotelsProvider implements HotelsProvider {
         }
         return null;
     }
-    public List<String> searchHotels(String destId, String checkinDate, String checkoutDate, String adultsNumber, String childrensNumber, String childrensAge, String roomNumber) {
+    public Map<String, String> searchHotels(String destId, String checkinDate, String checkoutDate, String adultsNumber, String childrensNumber, String childrensAge, String roomNumber, String islandName) {
         try {
             String apiKey = "77f0f6e079msh3c7c501786eb1d0p1f2305jsndf8f225650c8";
             String apiHost = "booking-com.p.rapidapi.com";//TODO que reciba la apikey y apihost como parametros
@@ -78,7 +78,7 @@ public class BookingHotelsProvider implements HotelsProvider {
             HttpGet request = createHttpGetRequest(url, apiKey, apiHost);
             HttpResponse response = executeHttpRequest(request);
             String responseBody = org.apache.http.util.EntityUtils.toString(response.getEntity());
-            return processHotelSearchResponse(responseBody);
+            return processHotelSearchResponse(responseBody, islandName);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -116,21 +116,19 @@ public class BookingHotelsProvider implements HotelsProvider {
         return client.execute(request);
     }
 
-    private static List<String> processHotelSearchResponse(String responseBody) {
-        List<String> hotelList = new ArrayList<>();
+    private static Map<String, String> processHotelSearchResponse(String responseBody, String islandName) {
+        Map<String, String> hotelMap = new HashMap<>();
         JsonObject jsonResponse = JsonParser.parseString(responseBody).getAsJsonObject();
 
         if (jsonResponse.has("result")) {
             JsonArray resultsArray = jsonResponse.getAsJsonArray("result");
             for (int i = 0; i < resultsArray.size(); i++) {
                 JsonObject hotelObject = resultsArray.get(i).getAsJsonObject();
-                hotelList.add(hotelObject.toString());
+                hotelMap.put(hotelObject.toString(), islandName);
             }
         }
-
-        return hotelList;
+        return hotelMap;
     }
-
     private static String buildUrlWithParams2(String baseUrl, Map<String, String> params) {
         StringBuilder urlBuilder = new StringBuilder(baseUrl);
 
@@ -144,14 +142,17 @@ public class BookingHotelsProvider implements HotelsProvider {
 
         return urlBuilder.toString();
     }
-    public static List<Hotel> convertJsonListToHotelList(List<String> jsonList, String checkInDate, String checkOutDate) {
+    public static List<Hotel> convertJsonListToHotelList(Map<String, String> jsonMap, String checkInDate, String checkOutDate) {
         List<Hotel> hotelList = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
 
-        for (String jsonString : jsonList) {
+        for (Map.Entry<String, String> entry : jsonMap.entrySet()) {
+            String jsonString = entry.getKey();
+            String islandName = entry.getValue();
+
             try {
                 JsonNode jsonNode = objectMapper.readTree(jsonString);
-                Hotel hotel = createHotelFromJsonNode(jsonNode, checkInDate, checkOutDate);
+                Hotel hotel = createHotelFromJsonNode(jsonNode, checkInDate, checkOutDate, islandName);
                 hotelList.add(hotel);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -161,7 +162,7 @@ public class BookingHotelsProvider implements HotelsProvider {
         return hotelList;
     }
 
-    private static Hotel createHotelFromJsonNode(JsonNode jsonNode, String checkIn, String checkOut) {
+    private static Hotel createHotelFromJsonNode(JsonNode jsonNode, String checkIn, String checkOut, String islandName) {
         String id = extractId(jsonNode);
         String name = extractName(jsonNode);
         String location = extractLocation(jsonNode);
@@ -178,7 +179,7 @@ public class BookingHotelsProvider implements HotelsProvider {
         List<String> services = extractServices(jsonNode);
         Instant ts = Instant.now();
 
-        return new Hotel(id, name, location, latitude, longitude, totalPriceAfterTaxesAndDiscount,
+        return new Hotel(id, name, location, latitude, longitude, islandName, totalPriceAfterTaxesAndDiscount,
                 pricePerNightAfterTaxesAndDiscount, discountPercentageForOnlineBooking,
                 review, reviewNumber, distanceToCenter, starsNumber, freeCancellation, services, checkIn, checkOut, ts, "Hotels-Info-Provider");
     }

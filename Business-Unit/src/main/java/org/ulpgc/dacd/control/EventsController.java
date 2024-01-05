@@ -1,34 +1,30 @@
 package org.ulpgc.dacd.control;
 
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class EventsController {
-    private final EventsReceiver weatherReceiver;
-    private final EventsReceiver hotelReceiver;
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2); // 2 hilos
-
-    public EventsController(EventsReceiver weatherEventsReceiver, EventsReceiver hotelReceiver) {
-        this.weatherReceiver = weatherEventsReceiver;
-        this.hotelReceiver = hotelReceiver;
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private final ExecutorService executorService;
+    private final EventReceiver receiver;
+    public EventsController(EventReceiver receiver) {
+        this.executorService = Executors.newFixedThreadPool(2);
+        this.receiver = receiver;
     }
 
     public void runTask() {
-        scheduler.scheduleAtFixedRate(() -> {
-            executeTask();
-        }, 0, 15, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(this::executeTask, 0, 15, TimeUnit.MINUTES);
     }
 
     private void executeTask() {
-        // Crea un nuevo ExecutorService para las tareas actuales
-        var executorService = Executors.newFixedThreadPool(2);
-
-        executorService.submit(() -> {
+        /*executorService.submit(() -> {
             try {
                 weatherReceiver.receive();
             } catch (MySoftwareException e) {
-                e.printStackTrace(); // O manejar el error según tu necesidad
+                e.printStackTrace();
             }
         });
 
@@ -36,23 +32,35 @@ public class EventsController {
             try {
                 hotelReceiver.receive();
             } catch (MySoftwareException e) {
-                e.printStackTrace(); // O manejar el error según tu necesidad
+                e.printStackTrace();
             }
-        });
-
-        // Cierra el ExecutorService después de completar las tareas
-        executorService.shutdown();
+        });*/
+        try {
+            receiver.receive();
+        } catch (MySoftwareException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void shutdown() {
+    /*public void shutdown() {
+        executorService.shutdown();
+        try {
+            if (!executorService.awaitTermination(30, TimeUnit.SECONDS)) {
+                executorService.shutdownNow();
+            }
+        } catch (InterruptedException ex) {
+            executorService.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
+
         scheduler.shutdown();
         try {
-            if (!scheduler.awaitTermination(60, TimeUnit.SECONDS)) {
+            if (!scheduler.awaitTermination(30, TimeUnit.SECONDS)) {
                 scheduler.shutdownNow();
             }
         } catch (InterruptedException ex) {
             scheduler.shutdownNow();
             Thread.currentThread().interrupt();
         }
-    }
+    }*/
 }
