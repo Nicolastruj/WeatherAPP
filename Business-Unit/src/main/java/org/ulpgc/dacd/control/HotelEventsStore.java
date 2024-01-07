@@ -7,7 +7,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class HotelEventsStore {
 
@@ -22,10 +24,12 @@ public class HotelEventsStore {
 
     private String generateTableName(JsonObject eventJson) {
         String islandName = eventJson.get("islandName").getAsString();
-        Instant tomorrow = Instant.now().plusSeconds(24 * 60 * 60);
-        String ts = eventJson.get("ts").getAsString().replace("T", " ").substring(0, 19);
-        String timePart = ts.substring(11, 19);
-        return islandName;
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+        String formattedDate = tomorrow.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String callTime = eventJson.get("ts").getAsString();
+        LocalDateTime dateTime = LocalDateTime.parse(callTime, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+        String hour = dateTime.format(DateTimeFormatter.ofPattern("HH"));
+        return islandName + "_" + formattedDate + "_" + hour;
     }
 
     private void createTableIfNotExists(String tableName) {

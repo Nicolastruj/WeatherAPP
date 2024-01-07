@@ -72,8 +72,8 @@ public class BookingHotelsProvider implements HotelsProvider {
     }
     public Map<String, String> searchHotels(String destId, String checkinDate, String checkoutDate, String adultsNumber, String childrensNumber, String childrensAge, String roomNumber, String islandName) {
         try {
-            String apiKey = "77f0f6e079msh3c7c501786eb1d0p1f2305jsndf8f225650c8";
-            String apiHost = "booking-com.p.rapidapi.com";//TODO que reciba la apikey y apihost como parametros
+            String apiKey = "597710c62dmsh05f6cf3b401fb3ep174551jsnd58ccf2826ae";
+            String apiHost = "booking-com.p.rapidapi.com";//TODO que reciba la apikey y apihost como parametros y hacer que se pasen en el constructor
             String url = buildSearchUrl(destId, checkinDate, checkoutDate, adultsNumber, childrensNumber, childrensAge, roomNumber);
             HttpGet request = createHttpGetRequest(url, apiKey, apiHost);
             HttpResponse response = executeHttpRequest(request);
@@ -213,7 +213,7 @@ public class BookingHotelsProvider implements HotelsProvider {
     }
 
     private static String extractReview(JsonNode jsonNode) {
-        return jsonNode.path("review_score_word").asText("");
+        return jsonNode.path("review_score").asText("");
     }
 
     private static String extractReviewNumber(JsonNode jsonNode) {

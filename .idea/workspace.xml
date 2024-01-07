@@ -4,27 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="51th commit received in directory and receive in data base, going to try with threads">
-      <change afterPath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/EventReceiver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/InstantTypeAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/WeatherEventsStore.java" afterDir="false" />
+    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="52th commit receiver changed">
+      <change afterPath="$PROJECT_DIR$/GUI/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GUI/src/main/java/org/ulpgc/dacd/control/GUIController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GUI/src/main/java/org/ulpgc/dacd/control/GUIExecutor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GUI/src/main/java/org/ulpgc/dacd/control/SwingGUIExecutor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/EventsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/EventsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/HotelEventsReceiver.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/HotelEventsSQLStore.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/WeatherEventsReceiver.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/resources/eventstore/prediction.Hotel/Hotels-Info-Provider/20240104.events" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/resources/eventstore/prediction.Weather/Prediction-Provider/20240104.events" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/resources/hotelEventsMart.db" beforeDir="false" afterPath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/HotelEventsStore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datalake-Builder/src/main/java/org/ulpgc/dacd/control/EventsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Datalake-Builder/src/main/java/org/ulpgc/dacd/control/EventsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datalake-Builder/src/main/java/org/ulpgc/dacd/control/HotelEventsReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/Datalake-Builder/src/main/java/org/ulpgc/dacd/control/HotelEventsReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datalake-Builder/src/main/java/org/ulpgc/dacd/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Datalake-Builder/src/main/java/org/ulpgc/dacd/control/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datalake-Builder/src/main/java/org/ulpgc/dacd/control/WeatherEventsReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/Datalake-Builder/src/main/java/org/ulpgc/dacd/control/WeatherEventsReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/control/BookingEventsStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/control/BookingEventsStore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/HotelEventsStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/HotelEventsStore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/InstantTypeAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/WeatherEventsStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/WeatherEventsStore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/resources/databases/HotelEventsMart.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/resources/databases/WeatherEventsMart.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/resources/eventstore/prediction.Hotel/Hotels-Info-Provider/20240105.events" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/resources/eventstore/prediction.Weather/Prediction-Provider/20240105.events" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/control/BookingHotelsProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/control/BookingHotelsProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/model/Hotel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/model/Hotel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/model/Location.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/control/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +89,7 @@
       <recent name="org.ulpgc.dacd.control" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main prediction">
+  <component name="RunManager" selected="Application.Main GUI">
     <configuration name="Main Business Unit" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="org.ulpgc.dacd.control.Main" />
       <module name="Business-Unit" />
@@ -109,6 +106,19 @@
     <configuration name="Main DataLake" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="org.ulpgc.dacd.control.Main" />
       <module name="Datalake-Builder" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.ulpgc.dacd.control.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main GUI" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="org.ulpgc.dacd.control.Main" />
+      <module name="GUI" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.ulpgc.dacd.control.*" />
@@ -147,6 +157,7 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.Main GUI" />
       <item itemvalue="Application.Main hotel" />
       <item itemvalue="Application.Main DataLake" />
       <item itemvalue="Application.Main prediction" />
@@ -475,7 +486,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704386827745</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="52th commit receiver changed">
+      <option name="closed" value="true" />
+      <created>1704467076515</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1704467076515</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -490,7 +509,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="15th commit seems finished" />
     <MESSAGE value="17th commit workspace develop2" />
     <MESSAGE value="19th commit second practice start" />
     <MESSAGE value="20th commit modiles created" />
@@ -515,6 +533,7 @@
     <MESSAGE value="49th commit implementing business unit" />
     <MESSAGE value="50th commit datamart started" />
     <MESSAGE value="51th commit received in directory and receive in data base, going to try with threads" />
-    <option name="LAST_COMMIT_MESSAGE" value="51th commit received in directory and receive in data base, going to try with threads" />
+    <MESSAGE value="52th commit receiver changed" />
+    <option name="LAST_COMMIT_MESSAGE" value="52th commit receiver changed" />
   </component>
 </project>

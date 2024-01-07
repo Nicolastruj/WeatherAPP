@@ -8,7 +8,7 @@ public class Main {
         HotelsProvider bookingHotelsProvider = new BookingHotelsProvider();
         HotelsStore bookingHotelsStorer = new BookingEventsStore();
         HotelsController controller = new HotelsController(bookingHotelsProvider, bookingHotelsStorer, getIslandNames());
-        String apiKey = "77f0f6e079msh3c7c501786eb1d0p1f2305jsndf8f225650c8";
+        String apiKey = "597710c62dmsh05f6cf3b401fb3ep174551jsnd58ccf2826ae";
         String apiHost = "booking-com.p.rapidapi.com";
         String adultsNumber = "1";
         String childrensNumber = "1";

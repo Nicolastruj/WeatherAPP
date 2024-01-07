@@ -13,6 +13,7 @@
         <module>Datalake-Builder</module>
         <module>Hotels-info-provider</module>
         <module>Business-Unit</module>
+        <module>GUI</module>
     </modules>
 
     <properties>
