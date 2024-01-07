@@ -4,24 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="52th commit receiver changed">
-      <change afterPath="$PROJECT_DIR$/GUI/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GUI/src/main/java/org/ulpgc/dacd/control/GUIController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GUI/src/main/java/org/ulpgc/dacd/control/GUIExecutor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GUI/src/main/java/org/ulpgc/dacd/control/SwingGUIExecutor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="53th commit weather data displayed on gui">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/EventsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/EventsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/HotelEventsStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/HotelEventsStore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/InstantTypeAdapter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/WeatherEventsStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/Business-Unit/src/main/java/org/ulpgc/dacd/control/WeatherEventsStore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/resources/databases/HotelEventsMart.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/resources/databases/WeatherEventsMart.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/resources/eventstore/prediction.Hotel/Hotels-Info-Provider/20240105.events" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/resources/eventstore/prediction.Weather/Prediction-Provider/20240105.events" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/control/BookingHotelsProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/control/BookingHotelsProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hotels-Info-Provider/src/main/java/org/ulpgc/dacd/control/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/src/main/java/org/ulpgc/dacd/control/SwingGUIExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/src/main/java/org/ulpgc/dacd/control/SwingGUIExecutor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,8 +150,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main prediction" />
         <item itemvalue="Application.Main Business Unit" />
+        <item itemvalue="Application.Main prediction" />
         <item itemvalue="Application.Main DataLake" />
         <item itemvalue="Application.Main Business Unit" />
         <item itemvalue="Application.Main Business Unit" />
@@ -494,7 +479,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704467076515</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="53th commit weather data displayed on gui">
+      <option name="closed" value="true" />
+      <created>1704648023953</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1704648023953</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -509,7 +502,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="17th commit workspace develop2" />
     <MESSAGE value="19th commit second practice start" />
     <MESSAGE value="20th commit modiles created" />
     <MESSAGE value="21th commit sender and receiver created" />
@@ -534,6 +526,7 @@
     <MESSAGE value="50th commit datamart started" />
     <MESSAGE value="51th commit received in directory and receive in data base, going to try with threads" />
     <MESSAGE value="52th commit receiver changed" />
-    <option name="LAST_COMMIT_MESSAGE" value="52th commit receiver changed" />
+    <MESSAGE value="53th commit weather data displayed on gui" />
+    <option name="LAST_COMMIT_MESSAGE" value="53th commit weather data displayed on gui" />
   </component>
 </project>
