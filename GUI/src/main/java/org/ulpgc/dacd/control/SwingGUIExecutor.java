@@ -25,8 +25,6 @@ public class SwingGUIExecutor implements GUIExecutor {
         initialFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initialFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         initialFrame.setLayout(new BorderLayout());
-
-        // Panel para los botones
         JPanel buttonPanel = new JPanel(new GridLayout(1, 0, 10, 200));
         String[] islands = {"Tenerife", "GranCanaria", "Lanzarote", "Fuerteventura", "LaPalma", "LaGomera", "ElHierro", "LaGraciosa"};
 
@@ -41,8 +39,6 @@ public class SwingGUIExecutor implements GUIExecutor {
             });
             buttonPanel.add(islandButton);
         }
-
-        // Panel para la imagen
         JPanel imagePanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -69,8 +65,6 @@ public class SwingGUIExecutor implements GUIExecutor {
         islandFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         islandFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         islandFrame.setLayout(new BorderLayout());
-
-        // Panel para la imagen de la isla
         JPanel imagePanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -94,12 +88,8 @@ public class SwingGUIExecutor implements GUIExecutor {
             createAndShowInitialGUI();
         });
         islandFrame.getContentPane().add(backButton, BorderLayout.SOUTH);
-
-        // Crear contenedores para los paneles de clima y hoteles
         JPanel weatherPanelContainer = new JPanel(new BorderLayout());
         JPanel hotelPanelContainer = new JPanel(new BorderLayout());
-
-        // Crear CardLayout para el clima y los hoteles
         CardLayout weatherCardLayout = new CardLayout();
         CardLayout hotelCardLayout = new CardLayout();
 
@@ -122,8 +112,6 @@ public class SwingGUIExecutor implements GUIExecutor {
 
         islandFrame.add(weatherPanelContainer, BorderLayout.WEST);
         islandFrame.add(hotelPanelContainer, BorderLayout.EAST);
-
-        // Crear botones de navegación para el clima
         JButton prevWeatherButton = new JButton("<");
         JButton nextWeatherButton = new JButton(">");
 
@@ -140,8 +128,6 @@ public class SwingGUIExecutor implements GUIExecutor {
         JPanel weatherButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         weatherButtonPanel.add(prevWeatherButton);
         weatherButtonPanel.add(nextWeatherButton);
-
-        // Crear botones de navegación para los hoteles
         JButton prevHotelButton = new JButton("<");
         JButton nextHotelButton = new JButton(">");
 
@@ -158,8 +144,6 @@ public class SwingGUIExecutor implements GUIExecutor {
         JPanel hotelButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         hotelButtonPanel.add(prevHotelButton);
         hotelButtonPanel.add(nextHotelButton);
-
-        // Agregar los botones de navegación al área norte del JFrame
         JPanel navigationPanel = new JPanel(new BorderLayout());
         navigationPanel.add(weatherButtonPanel, BorderLayout.WEST);
         navigationPanel.add(hotelButtonPanel, BorderLayout.EAST);
@@ -219,7 +203,8 @@ public class SwingGUIExecutor implements GUIExecutor {
                         hotelEventPanel.add(new JLabel("Ubicación: " + rs.getString("location")));
                         hotelEventPanel.add(new JLabel("Precio: " + rs.getDouble("price") + " €"));
                         hotelEventPanel.add(new JLabel("Valoración: " + rs.getString("review")));
-                        hotelEventPanel.add(new JLabel("Servicios: " + rs.getString("services")));
+                        hotelEventPanel.add(new JLabel("Numero de reviews: " + rs.getString("reviewNumber")));
+                        hotelEventPanel.add(new JLabel("Distancia al centro de la localidad: " + rs.getString("distanceToCenter") + "km"));
                         hotelEventPanels.add(hotelEventPanel);
                     }
 
@@ -254,7 +239,7 @@ public class SwingGUIExecutor implements GUIExecutor {
                 String tableName = tables.getString("TABLE_NAME");
                 if (tableName.contains(tomorrowDate)) {
                     int startIndex = tableName.lastIndexOf("_") + 1;
-                    int endIndex = tableName.lastIndexOf("_", startIndex) + 3; // Agregar 3 para incluir las dos cifras de la hora
+                    int endIndex = tableName.lastIndexOf("_", startIndex) + 3;
                     String timeString = tableName.substring(startIndex, endIndex);
                     LocalDateTime dateTime = LocalDateTime.parse(tomorrowDate + "_" + timeString, DateTimeFormatter.ofPattern("yyyyMMdd_HH"));
                     tableDateTimes.put(tableName, dateTime);

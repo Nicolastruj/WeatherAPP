@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="54th commit let him cook">
+    <list default="true" id="f8c4ef04-a60f-4987-9e61-668e950067e1" name="Changes" comment="56th commit until here it works">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/resources/databases/HotelEventsMart.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/resources/databases/WeatherEventsMart.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/resources/eventstore/prediction.Hotel/Hotels-Info-Provider/20240107.events" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/resources/eventstore/prediction.Weather/Prediction-Provider/20240107.events" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business-Unit/src/main/resources/eventstore/prediction.Hotel/Hotels-Info-Provider/20240108.events" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/src/main/java/org/ulpgc/dacd/control/SwingGUIExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/src/main/java/org/ulpgc/dacd/control/SwingGUIExecutor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +77,7 @@
       <recent name="org.ulpgc.dacd.control" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main hotel">
+  <component name="RunManager" selected="Application.Main GUI">
     <configuration name="Main Business Unit" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="org.ulpgc.dacd.control.Main" />
       <module name="Business-Unit" />
@@ -154,8 +153,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main Business Unit" />
         <item itemvalue="Application.Main prediction" />
+        <item itemvalue="Application.Main Business Unit" />
         <item itemvalue="Application.Main DataLake" />
         <item itemvalue="Application.Main Business Unit" />
         <item itemvalue="Application.Main Business Unit" />
@@ -499,7 +498,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704652853934</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="56th commit until here it works">
+      <option name="closed" value="true" />
+      <created>1704730395288</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1704730395288</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -514,7 +521,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="20th commit modiles created" />
     <MESSAGE value="21th commit sender and receiver created" />
     <MESSAGE value="22th commit sender changed" />
     <MESSAGE value="23th commit messages sended" />
@@ -539,6 +545,7 @@
     <MESSAGE value="52th commit receiver changed" />
     <MESSAGE value="53th commit weather data displayed on gui" />
     <MESSAGE value="54th commit let him cook" />
-    <option name="LAST_COMMIT_MESSAGE" value="54th commit let him cook" />
+    <MESSAGE value="56th commit until here it works" />
+    <option name="LAST_COMMIT_MESSAGE" value="56th commit until here it works" />
   </component>
 </project>
