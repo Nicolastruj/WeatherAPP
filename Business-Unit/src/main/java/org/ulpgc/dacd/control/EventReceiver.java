@@ -74,18 +74,14 @@ public class EventReceiver implements EventsReceiver {
         String eventData = textMessage.getText();
         JsonObject jsonObject = JsonParser.parseString(eventData).getAsJsonObject();
         String ss = getSS(jsonObject);
-
-        // Evaluación del valor de 'ss' para determinar en qué tópico y base de datos guardar el evento
         if (ss.startsWith("H")) {
-            // Si el valor de 'ss' comienza con 'H', se trata de eventos de hoteles
-            String fileName = createFileName(baseDirectories[1], ss); // Utiliza el segundo directorio
+            String fileName = createFileName(baseDirectories[1], ss);
             writeToFile(eventData, fileName);
-            hotelEventsStore.saveHotelEvent(eventData); // Guarda en la base de datos de hoteles
+            hotelEventsStore.saveHotelEvent(eventData);
         } else if (ss.startsWith("P")) {
-            // Si el valor de 'ss' comienza con 'W', se trata de eventos climáticos
-            String fileName = createFileName(baseDirectories[0], ss); // Utiliza el primer directorio
+            String fileName = createFileName(baseDirectories[0], ss);
             writeToFile(eventData, fileName);
-            weatherEventsStore.saveWeatherEvent(eventData); // Guarda en la base de datos de clima
+            weatherEventsStore.saveWeatherEvent(eventData);
         }
     }
 

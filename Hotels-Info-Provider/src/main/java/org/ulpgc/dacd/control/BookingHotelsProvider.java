@@ -54,7 +54,7 @@ public class BookingHotelsProvider implements HotelsProvider {
             for (Map.Entry<String, String> entry : params.entrySet()) {
                 urlBuilder.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
             }
-            urlBuilder.deleteCharAt(urlBuilder.length() - 1); // Eliminar el último "&"
+            urlBuilder.deleteCharAt(urlBuilder.length() - 1);
         }
         return urlBuilder.toString();
     }
@@ -197,8 +197,8 @@ public class BookingHotelsProvider implements HotelsProvider {
     }
 
     private static double extractTotalPrice(JsonNode jsonNode) {
-        JsonNode priceNode = jsonNode.path("composite_price_breakdown");
-        return priceNode.path("gross_amount").asDouble(0.0);
+        JsonNode priceNode = jsonNode.path("price_breakdown");
+        return priceNode.path("gross_price").asDouble(0.0);
     }
 
     private static double extractPricePerNight(JsonNode jsonNode) {
