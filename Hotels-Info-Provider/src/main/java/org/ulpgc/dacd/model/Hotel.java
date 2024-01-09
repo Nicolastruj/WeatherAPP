@@ -110,4 +110,16 @@ public class Hotel {
     public String getSs() {
         return ss;
     }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public String getIslandName() {
+        return islandName;
+    }
 }

@@ -20,19 +20,10 @@ public class WeatherEventsReceiver implements EventsReceiver{
     private static String clientID = "Datalake-Builder";
     public void receive() throws MySoftwareException {
         try {
-            System.out.println("Iniciando proceso de recepción...");
             Connection connection = createAndStartConnection();
-            System.out.println("Conexión iniciada con éxito.");
-
             Session session = createSession(connection);
-            System.out.println("Sesión creada con éxito.");
-
             Topic destination = createDestination(session);
-            System.out.println("Destino creado con éxito.");
-
             MessageConsumer consumer = createMessageConsumer(session, destination);
-            System.out.println("Consumidor creado con éxito. Esperando mensajes...");
-
             setupMessageListener(consumer);
         } catch (JMSException e) {
             throw new MySoftwareException("Error in JMS processing", e);
@@ -40,7 +31,6 @@ public class WeatherEventsReceiver implements EventsReceiver{
     }
 
     private void setupMessageListener(MessageConsumer consumer) throws JMSException {
-        System.out.println("Configurando listener de mensajes...");
         consumer.setMessageListener(message -> {
             if (message instanceof TextMessage) {
                 TextMessage textMessage = (TextMessage) message;
@@ -53,7 +43,6 @@ public class WeatherEventsReceiver implements EventsReceiver{
                 }
             }
         });
-        System.out.println("Listener de mensajes configurado y en espera.");
     }
 
 
@@ -105,15 +94,14 @@ public class WeatherEventsReceiver implements EventsReceiver{
     private String formatLocalDateTime(LocalDateTime localDateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         return localDateTime.format(formatter);
-    }//TODO recordar que en el momento del arranque la business unit no va a tener datos del broker porque los weather son cada 6 h por lo tanto en el momento del arranque hay que cogerlos del datalake y luego sigues con los del broker, es solo en el momento del arranque para tener datos
-
+    }
     private String getSS(JsonObject jsonObjectWeather) {
         return jsonObjectWeather.get("ss").getAsString();
     }
     private File createEventStoreDirectory(String ss) {
         File eventStoreDirectory = new File(baseDirectory + ss + "/");
         if (!eventStoreDirectory.exists()) {
-            System.out.println("Creating directory: " + eventStoreDirectory.getAbsolutePath());  // Agregar este registro
+            System.out.println("Creating directory: " + eventStoreDirectory.getAbsolutePath());
             eventStoreDirectory.mkdirs();
         }
         return eventStoreDirectory;
@@ -128,7 +116,7 @@ public class WeatherEventsReceiver implements EventsReceiver{
         try (FileWriter writer = new FileWriter(eventFile, true)) {
             writer.write(eventData + System.lineSeparator());
         } catch (IOException e) {
-            System.out.println("Error writing to file: " + e.getMessage());  // Agregar este registro
+            System.out.println("Error writing to file: " + e.getMessage());
             throw e;
         }
     }

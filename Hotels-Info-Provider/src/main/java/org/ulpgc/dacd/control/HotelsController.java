@@ -24,7 +24,7 @@ public class HotelsController {
                         String childrensNumber, String childrensAge, String roomNumber) {
         scheduler.scheduleAtFixedRate(() -> task(apiKey, apiHost, formatter.format(LocalDate.now().plusDays(1)),
                 formatter.format(LocalDate.now().plusDays(5)),
-                adultsNumber, childrensNumber, childrensAge, roomNumber), 0, 15, TimeUnit.MINUTES);
+                adultsNumber, childrensNumber, childrensAge, roomNumber), 0, 6, TimeUnit.HOURS);
     }
     public void task(String apiKey, String apiHost, String checkinDate, String checkoutDate,
                      String adultsNumber, String childrensNumber, String childrensAge, String roomNumber) {

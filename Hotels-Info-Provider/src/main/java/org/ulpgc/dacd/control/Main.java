@@ -8,12 +8,12 @@ public class Main {
         HotelsProvider bookingHotelsProvider = new BookingHotelsProvider();
         HotelsStore bookingHotelsStorer = new BookingEventsStore();
         HotelsController controller = new HotelsController(bookingHotelsProvider, bookingHotelsStorer, getIslandNames());
-        String apiKey = "597710c62dmsh05f6cf3b401fb3ep174551jsnd58ccf2826ae";
-        String apiHost = "booking-com.p.rapidapi.com";
-        String adultsNumber = "1";
-        String childrensNumber = "1";
-        String childrensAge = "3";
-        String roomNumber = "1";
+        String apiKey = args[0];
+        String apiHost = args[1];
+        String adultsNumber = args[2];
+        String childrensNumber = args[3];
+        String childrensAge = args[4];
+        String roomNumber = args[5];
         controller.runTask(apiKey, apiHost, adultsNumber, childrensNumber, childrensAge, roomNumber);
     }
     public static List<String> getIslandNames() {

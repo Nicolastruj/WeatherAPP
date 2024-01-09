@@ -60,7 +60,7 @@ public class WeatherEventsStore implements WeatherStore {
             String serializedData = serializeWeatherToJson(weatherPrediction);
             return session.createTextMessage(serializedData);
         } catch (Exception e) {
-            throw new JMSException("Error al crear el mensaje de texto: " + e.getMessage());
+            throw new JMSException("Error creating the text message: " + e.getMessage());
         }
     }
     private String serializeWeatherToJson(Weather weather) {

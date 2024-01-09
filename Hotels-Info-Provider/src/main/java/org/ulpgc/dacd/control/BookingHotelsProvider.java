@@ -22,7 +22,7 @@ public class BookingHotelsProvider implements HotelsProvider {
                                  String islandName) throws MyHotelException {
         try {
             String destId = getDestId(islandName, apiKey, apiHost);
-            Map<String, String> jsonHotelMap = searchHotels(destId, checkinDate, checkoutDate, adultsNumber, childrensNumber, childrensAge, roomNumber, islandName);
+            Map<String, String> jsonHotelMap = searchHotels(apiKey, apiHost, destId, checkinDate, checkoutDate, adultsNumber, childrensNumber, childrensAge, roomNumber, islandName);
 
             return convertJsonListToHotelList(jsonHotelMap, checkinDate, checkoutDate);
         } catch (Exception e) {
@@ -70,10 +70,8 @@ public class BookingHotelsProvider implements HotelsProvider {
         }
         return null;
     }
-    public Map<String, String> searchHotels(String destId, String checkinDate, String checkoutDate, String adultsNumber, String childrensNumber, String childrensAge, String roomNumber, String islandName) {
+    public Map<String, String> searchHotels(String apiKey, String apiHost, String destId, String checkinDate, String checkoutDate, String adultsNumber, String childrensNumber, String childrensAge, String roomNumber, String islandName) {
         try {
-            String apiKey = "597710c62dmsh05f6cf3b401fb3ep174551jsnd58ccf2826ae";
-            String apiHost = "booking-com.p.rapidapi.com";//TODO que reciba la apikey y apihost como parametros y hacer que se pasen en el constructor
             String url = buildSearchUrl(destId, checkinDate, checkoutDate, adultsNumber, childrensNumber, childrensAge, roomNumber);
             HttpGet request = createHttpGetRequest(url, apiKey, apiHost);
             HttpResponse response = executeHttpRequest(request);
@@ -137,7 +135,7 @@ public class BookingHotelsProvider implements HotelsProvider {
             for (Map.Entry<String, String> entry : params.entrySet()) {
                 urlBuilder.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
             }
-            urlBuilder.deleteCharAt(urlBuilder.length() - 1); // Eliminar el último "&"
+            urlBuilder.deleteCharAt(urlBuilder.length() - 1);
         }
 
         return urlBuilder.toString();

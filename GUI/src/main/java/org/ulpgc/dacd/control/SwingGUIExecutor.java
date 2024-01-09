@@ -164,12 +164,12 @@ public class SwingGUIExecutor implements GUIExecutor {
 
             while (rs.next()) {
                 JPanel weatherPanel = new JPanel(new GridLayout(0, 1));
-                weatherPanel.add(new JLabel("Hora de predicción: " + rs.getString("predictionTime")));
-                weatherPanel.add(new JLabel("Temperatura: " + rs.getDouble("temperature") + " °C"));
-                weatherPanel.add(new JLabel("Precipitación: " + rs.getDouble("precipitation") + " mm"));
-                weatherPanel.add(new JLabel("Humedad: " + rs.getInt("humidity") + "%"));
-                weatherPanel.add(new JLabel("Nubosidad: " + rs.getInt("clouds") + "%"));
-                weatherPanel.add(new JLabel("Velocidad del viento: " + rs.getDouble("windSpeed") + " m/s"));
+                weatherPanel.add(new JLabel("Prediction time: " + rs.getString("predictionTime")));
+                weatherPanel.add(new JLabel("Temperature: " + rs.getDouble("temperature") + " °C"));
+                weatherPanel.add(new JLabel("Precipitation: " + rs.getDouble("precipitation") + " mm"));
+                weatherPanel.add(new JLabel("Humidity: " + rs.getInt("humidity") + "%"));
+                weatherPanel.add(new JLabel("Cloudisness: " + rs.getInt("clouds") + "%"));
+                weatherPanel.add(new JLabel("Wind speed: " + rs.getDouble("windSpeed") + " m/s"));
                 weatherPanels.add(weatherPanel);
             }
 
@@ -178,7 +178,7 @@ public class SwingGUIExecutor implements GUIExecutor {
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al obtener datos meteorológicos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error in obtaining data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return weatherPanels;
     }
@@ -199,12 +199,12 @@ public class SwingGUIExecutor implements GUIExecutor {
 
                     while (rs.next()) {
                         JPanel hotelEventPanel = new JPanel(new GridLayout(0, 1));
-                        hotelEventPanel.add(new JLabel("Nombre: " + rs.getString("name")));
-                        hotelEventPanel.add(new JLabel("Ubicación: " + rs.getString("location")));
-                        hotelEventPanel.add(new JLabel("Precio: " + rs.getDouble("price") + " €"));
-                        hotelEventPanel.add(new JLabel("Valoración: " + rs.getString("review")));
-                        hotelEventPanel.add(new JLabel("Numero de reviews: " + rs.getString("reviewNumber")));
-                        hotelEventPanel.add(new JLabel("Distancia al centro de la localidad: " + rs.getString("distanceToCenter") + "km"));
+                        hotelEventPanel.add(new JLabel("Name: " + rs.getString("name")));
+                        hotelEventPanel.add(new JLabel("Location: " + rs.getString("location")));
+                        hotelEventPanel.add(new JLabel("Price: " + rs.getDouble("price") + " €"));
+                        hotelEventPanel.add(new JLabel("Review note: " + rs.getString("review")));
+                        hotelEventPanel.add(new JLabel("Number of review: " + rs.getString("reviewNumber")));
+                        hotelEventPanel.add(new JLabel("Distance to the center: " + rs.getString("distanceToCenter") + "km"));
                         hotelEventPanels.add(hotelEventPanel);
                     }
 
@@ -216,7 +216,7 @@ public class SwingGUIExecutor implements GUIExecutor {
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al obtener datos de eventos de hoteles: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error in obtaining data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return hotelEventPanels;
     }

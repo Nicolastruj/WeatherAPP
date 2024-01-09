@@ -7,7 +7,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args){
         if (args.length < 1) {
-            System.out.println("Por favor, proporciona la API key como argumento.");
+            System.out.println("Pleas give the apiKey as an argument");
             return;
         }
         String apiKey = args[0];

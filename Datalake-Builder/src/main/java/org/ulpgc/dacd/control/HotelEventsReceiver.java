@@ -95,8 +95,7 @@ public class HotelEventsReceiver implements EventsReceiver{
     private String formatLocalDateTime(LocalDateTime localDateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         return localDateTime.format(formatter);
-    }//TODO recordar que en el momento del arranque la business unit no va a tener datos del broker porque los weather son cada 6 h por lo tanto en el momento del arranque hay que cogerlos del datalake y luego sigues con los del broker, es solo en el momento del arranque para tener datos
-
+    }
     private String getSS(JsonObject jsonObjectWeather) {
         return jsonObjectWeather.get("ss").getAsString();
     }
@@ -105,17 +104,10 @@ public class HotelEventsReceiver implements EventsReceiver{
 
         if (!eventStoreDirectory.exists()) {
             boolean directoriesCreated = eventStoreDirectory.mkdirs();
-            if (directoriesCreated) {
-                System.out.println("Directorio creado exitosamente en: " + eventStoreDirectory.getAbsolutePath());
-            } else {
-                System.out.println("No se pudo crear el directorio: " + eventStoreDirectory.getAbsolutePath());
-            }
-        } else {
-            System.out.println("El directorio ya existe: " + eventStoreDirectory.getAbsolutePath());
         }
-
         return eventStoreDirectory;
     }
+
 
     private String createFileName(String ss, String formattedDate) {
         return baseDirectory + ss + "/" + formattedDate + ".events";
@@ -126,7 +118,7 @@ public class HotelEventsReceiver implements EventsReceiver{
         try (FileWriter writer = new FileWriter(eventFile, true)) {
             writer.write(eventData + System.lineSeparator());
         } catch (IOException e) {
-            System.out.println("Error writing to file: " + e.getMessage());  // Agregar este registro
+            System.out.println("Error writting to file: " + e.getMessage());
             throw e;
         }
     }
