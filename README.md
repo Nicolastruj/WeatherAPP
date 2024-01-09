@@ -1,4 +1,4 @@
-# Practice 1: Data Capture from External Sources.
+# Final Project: Five-day getaway.
 
 - **Subject:** *Development of Applications for Data Science*
 - **Course:** *Second year 2023-2024*
